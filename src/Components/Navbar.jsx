@@ -1,21 +1,23 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Button, Avatar } from "@heroui/react";
+import { Button, Avatar, Skeleton } from "@heroui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Hamburger from "hamburger-react";
 import { Moon, Sun } from "@gravity-ui/icons";
 import { useTheme } from "next-themes";
+import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
+    const { data: session, isPending } = authClient.useSession();
+    const user = session?.user;
+
     const pathname = usePathname();
     const { theme, setTheme, resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-
 
     const navbarRef = useRef(null);
 
@@ -42,6 +44,12 @@ const Navbar = () => {
             document.removeEventListener("mousedown", handleOutsideAction);
         };
     }, [isMenuOpen, isProfileOpen]);
+
+    const handleLogout = async () => {
+        await authClient.signOut();
+        setIsProfileOpen(false);
+        setIsMenuOpen(false);
+    };
 
     const getLinkClass = (path, isMobile = false) => {
         const isActive = pathname === path;
@@ -77,42 +85,36 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link
-                            href="/tutors"
-                            className={getLinkClass("/tutors")}
-                        >
+                        <Link href="/tutors" className={getLinkClass("/tutors")}>
                             Tutors
                         </Link>
                     </li>
-                    {isLoggedIn && (
+                    {isPending ? (
                         <>
-                            <li>
-                                <Link
-                                    href="/add-tutors"
-                                    className={getLinkClass("/add-tutors")}
-                                >
-                                    Add Tutor
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/my-tutors"
-                                    className={getLinkClass("/my-tutors")}
-                                >
-                                    My Tutors
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/my-booked-sessions"
-                                    className={getLinkClass(
-                                        "/my-booked-sessions",
-                                    )}
-                                >
-                                    My Booked Sessions
-                                </Link>
-                            </li>
+                            <li><Skeleton className="w-20 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" /></li>
+                            <li><Skeleton className="w-20 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" /></li>
+                            <li><Skeleton className="w-36 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" /></li>
                         </>
+                    ) : (
+                        user && (
+                            <>
+                                <li>
+                                    <Link href="/add-tutors" className={getLinkClass("/add-tutors")}>
+                                        Add Tutor
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/my-tutors" className={getLinkClass("/my-tutors")}>
+                                        My Tutors
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/my-booked-sessions" className={getLinkClass("/my-booked-sessions")}>
+                                        My Booked Sessions
+                                    </Link>
+                                </li>
+                            </>
+                        )
                     )}
                 </ul>
 
@@ -123,24 +125,16 @@ const Navbar = () => {
                                 variant="light"
                                 isIconOnly
                                 className="w-6 h-6 text-zinc-600 dark:text-zinc-400"
-                                onClick={() =>
-                                    setTheme(
-                                        currentTheme === "dark"
-                                            ? "light"
-                                            : "dark",
-                                    )
-                                }
+                                onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
                             >
-                                {currentTheme === "dark" ? (
-                                    <Sun size={16} />
-                                ) : (
-                                    <Moon size={16} />
-                                )}
+                                {currentTheme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
                             </Button>
                         )}
                     </div>
 
-                    {!isLoggedIn ? (
+                    {isPending ? (
+                        <Skeleton className="w-9 h-9 rounded-full bg-zinc-200 dark:bg-zinc-800" />
+                    ) : !user ? (
                         <>
                             <Link href="/login">
                                 <Button className="rounded-lg bg-green-600 text-white font-medium px-5 py-2 hover:bg-green-700 transition">
@@ -160,16 +154,13 @@ const Navbar = () => {
                                 className="focus:outline-none flex items-center justify-center cursor-pointer ring-2 ring-transparent hover:ring-green-500 rounded-full p-0.5 transition"
                             >
                                 <Avatar className="w-9 h-9">
-                                    <Avatar.Image
-                                        alt="John Doe"
-                                        src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3"
-                                    />
-                                    <Avatar.Fallback>JD</Avatar.Fallback>
+                                    <Avatar.Image alt={user?.name} src={user?.image} />
+                                    <Avatar.Fallback className="uppercase">{user?.name?.slice(0, 2)}</Avatar.Fallback>
                                 </Avatar>
                             </div>
 
                             {isProfileOpen && (
-                                <div className="absolute right-0 mt-4 w-48 bg-white dark:bg-zinc-900 border border-zinc-200 /10 not-first:dark:border-zinc-800 rounded-2xl shadow-xl py-2 animate-in fade-in slide-in-from-top-2 duration-200 overflow-hidden text-center">
+                                <div className="absolute right-0 mt-4 w-48 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl py-2 animate-in fade-in slide-in-from-top-2 duration-200 overflow-hidden text-center">
                                     <Link
                                         href="/profile"
                                         className="block px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition text-left"
@@ -178,15 +169,13 @@ const Navbar = () => {
                                         Profile Page
                                     </Link>
                                     <hr className="border-zinc-200 dark:border-zinc-800/10 my-1" />
-                                    <button
-                                        onClick={() => {
-                                            setIsLoggedIn(false);
-                                            setIsProfileOpen(false);
-                                        }}
+                                    <Button
+                                        variant="ghost"
+                                        onClick={handleLogout}
                                         className="w-full block px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition text-left font-medium"
                                     >
                                         Logout
-                                    </button>
+                                    </Button>
                                 </div>
                             )}
                         </div>
@@ -199,131 +188,95 @@ const Navbar = () => {
                             variant="flat"
                             isIconOnly
                             className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
-                            onClick={() =>
-                                setTheme(
-                                    currentTheme === "dark" ? "light" : "dark",
-                                )
-                            }
+                            onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
                         >
-                            {currentTheme === "dark" ? (
-                                <Sun size={18} />
-                            ) : (
-                                <Moon size={18} />
-                            )}
+                            {currentTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
                         </Button>
                     )}
-                    <Hamburger
-                        toggled={isMenuOpen}
-                        toggle={setIsMenuOpen}
-                        size={22}
-                        color="#16a34a"
-                    />
+                    <Hamburger toggled={isMenuOpen} toggle={setIsMenuOpen} size={22} color="#16a34a" />
                 </div>
             </div>
 
             <div
                 className={`lg:hidden rounded-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 px-6 pb-8 pt-4 absolute w-full md:w-80 right-0 shadow-xl transition-all duration-300 ease-in-out ${
-                    isMenuOpen
-                        ? "opacity-100 translate-x-0 visible"
-                        : "opacity-0 translate-x-full invisible"
+                    isMenuOpen ? "opacity-100 translate-x-0 visible" : "opacity-0 translate-x-full invisible"
                 }`}
             >
-                {isLoggedIn && (
+                {isPending ? (
                     <div className="flex flex-col items-center justify-center border-b border-zinc-100 dark:border-zinc-800 pb-4 mb-6">
-                        <Avatar className="w-16 h-16 mb-2 ring-2 ring-green-500/20">
-                            <Avatar.Image
-                                alt="John Doe"
-                                src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3"
-                            />
-                            <Avatar.Fallback>JD</Avatar.Fallback>
-                        </Avatar>
-                        <span className="font-semibold text-zinc-800 dark:text-zinc-200">
-                            John Doe
-                        </span>
+                        <Skeleton className="w-16 h-16 mb-2 rounded-full bg-zinc-200 dark:bg-zinc-800" />
+                        <Skeleton className="w-24 h-4 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
                     </div>
+                ) : (
+                    user && (
+                        <div className="flex flex-col items-center justify-center border-b border-zinc-100 dark:border-zinc-800 pb-4 mb-6">
+                            <Avatar className="w-16 h-16 mb-2 ring-2 ring-green-500/20">
+                                <Avatar.Image alt={user?.name} src={user?.image} />
+                                <Avatar.Fallback>{user?.name?.slice(0, 2)}</Avatar.Fallback>
+                            </Avatar>
+                            <span className="font-semibold text-zinc-800 dark:text-zinc-200">{user?.name}</span>
+                        </div>
+                    )
                 )}
 
-                <ul className="flex flex-col space-y-4 font-medium mb-8 text-center">
+                <ul className="flex flex-col space-y-4 font-medium mb-8 text-center items-center">
                     <li>
-                        <Link
-                            href="/"
-                            className={getLinkClass("/", true)}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
+                        <Link href="/" className={getLinkClass("/", true)} onClick={() => setIsMenuOpen(false)}>
                             Home
                         </Link>
                     </li>
                     <li>
-                        <Link
-                            href="/tutors"
-                            className={getLinkClass("/tutors", true)}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
+                        <Link href="/tutors" className={getLinkClass("/tutors", true)} onClick={() => setIsMenuOpen(false)}>
                             Tutors
                         </Link>
                     </li>
-                    {isLoggedIn && (
+                    {isPending ? (
                         <>
-                            <li>
-                                <Link
-                                    href="/add-tutors"
-                                    className={getLinkClass(
-                                        "/add-tutors",
-                                        true,
-                                    )}
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    Add Tutor
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/my-tutors"
-                                    className={getLinkClass("/my-tutors", true)}
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    My Tutors
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/my-booked-sessions"
-                                    className={getLinkClass(
-                                        "/my-booked-sessions",
-                                        true,
-                                    )}
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    My Booked Sessions
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/profile"
-                                    className={getLinkClass("/profile", true)}
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    Profile
-                                </Link>
-                            </li>
+                            <li><Skeleton className="w-24 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" /></li>
+                            <li><Skeleton className="w-24 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" /></li>
+                            <li><Skeleton className="w-40 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" /></li>
+                            <li><Skeleton className="w-20 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" /></li>
                         </>
+                    ) : (
+                        user && (
+                            <>
+                                <li>
+                                    <Link href="/add-tutors" className={getLinkClass("/add-tutors", true)} onClick={() => setIsMenuOpen(false)}>
+                                        Add Tutor
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/my-tutors" className={getLinkClass("/my-tutors", true)} onClick={() => setIsMenuOpen(false)}>
+                                        My Tutors
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/my-booked-sessions" className={getLinkClass("/my-booked-sessions", true)} onClick={() => setIsMenuOpen(false)}>
+                                        My Booked Sessions
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/profile" className={getLinkClass("/profile", true)} onClick={() => setIsMenuOpen(false)}>
+                                        Profile
+                                    </Link>
+                                </li>
+                            </>
+                        )
                     )}
                 </ul>
 
-                {!isLoggedIn ? (
+                {isPending ? (
                     <div className="flex flex-col space-y-3">
-                        <Link
-                            href="/login"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
+                        <Skeleton className="w-full h-10 rounded-xl bg-zinc-200 dark:bg-zinc-800" />
+                    </div>
+                ) : !user ? (
+                    <div className="flex flex-col space-y-3">
+                        <Link href="/login" onClick={() => setIsMenuOpen(false)}>
                             <Button className="w-full rounded-xl bg-green-600 text-white font-medium py-2.5">
                                 Login
                             </Button>
                         </Link>
-                        <Link
-                            href="/register"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
+                        <Link href="/register" onClick={() => setIsMenuOpen(false)}>
                             <Button className="w-full rounded-xl bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400 font-medium py-2.5">
                                 Register
                             </Button>
@@ -331,10 +284,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <Button
-                        onClick={() => {
-                            setIsLoggedIn(false);
-                            setIsMenuOpen(false);
-                        }}
+                        onClick={handleLogout}
                         className="w-full font-semibold bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-950/40 rounded-xl py-2.5 text-red-600 dark:text-red-400 transition"
                     >
                         Logout

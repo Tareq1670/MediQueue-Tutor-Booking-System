@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {
     Button,
     Description,
@@ -10,22 +11,55 @@ import {
     TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 const RegisterPage = () => {
+    const [isLoading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const router = useRouter();
 
-
-
-    const handleRegister = (e) => {
-        e.preventDefault()
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError("");
         const formData = new FormData(e.currentTarget);
         const registerData = Object.fromEntries(formData.entries());
-        console.log(registerData);
-    } 
 
+        const { data, error } = await authClient.signUp.email({
+            email: registerData.email,
+            name: registerData.name,
+            image: registerData.image,
+            password: registerData.password,
+        });
 
+        setLoading(false);
+        console.log({ data, error });
 
-
+        try {
+            if (data) {
+                toast.success("Registration successful!", {
+                    duration: 3000,
+                    position: "top-center",
+                    style: {
+                        background: "var(--toast-bg, #ffffff)",
+                        color: "var(--toast-color, #1e293b)",
+                        borderRadius: "12px",
+                        border: "1px solid #e2e8f0",
+                    },
+                    className:
+                        "dark:bg-slate-800 dark:text-white dark:border-slate-700 font-sans shadow-xl",
+                });
+                router.push("/login");
+            } else {
+                throw new Error(error.message);
+            }
+        } catch (err) {
+            setError(err.message || "Registration failed");
+        }
+    };
 
     return (
         <div className="min-h-[calc(100vh-300px)] flex items-center justify-center md-0 md:px-4 py-4 md:py-12  transition-colors duration-300">
@@ -38,6 +72,12 @@ const RegisterPage = () => {
                         Join MediQueue to connect with medical tutors
                     </p>
                 </div>
+
+                {error && (
+                    <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-600 dark:text-red-400">
+                        {error}
+                    </div>
+                )}
 
                 <Form onSubmit={handleRegister} className="flex flex-col gap-4">
                     <TextField
@@ -130,9 +170,10 @@ const RegisterPage = () => {
 
                     <Button
                         type="submit"
+                        isDisabled={isLoading}
                         className="w-full rounded-lg bg-green-600 text-white font-semibold py-2.5 hover:bg-green-700 transition flex items-center justify-center gap-2 mt-2"
                     >
-                        Register
+                        {isLoading ? "Registering" : "Register"}
                     </Button>
                 </Form>
 

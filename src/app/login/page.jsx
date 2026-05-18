@@ -12,29 +12,51 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
     const router = useRouter();
     const [error, setError] = useState("");
+    const [isLoading, setLoading] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("");
-        
+        setLoading(true)
+
         const formData = new FormData(e.currentTarget);
         const loginData = Object.fromEntries(formData.entries());
 
-        console.log(loginData);
+        const { data, error } = await authClient.signIn.email({
+            email: loginData.email,
+            password: loginData.password,
+        });
+        setLoading(false)
 
-        // try {
-        //     if ("") {
-        //         router.push("/");
-        //     } else {
-        //         throw new Error("Invalid email or password");
-        //     }
-        // } catch (err) {
-        //     setError(err.message || "Something went wrong. Please try again.");
-        // }
+        console.log({data, error});
+
+        try {
+            if (data) {
+                toast.success("Welcome back to MediQueue!", {
+                    duration: 3000,
+                    position: "top-center",
+                    style: {
+                        background: "var(--toast-bg, #ffffff)",
+                        color: "var(--toast-color, #1e293b)",
+                        borderRadius: "12px",
+                        border: "1px solid #e2e8f0",
+                    },
+                    className:
+                        "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
+                });
+                router.push("/");
+            } else {
+                throw new Error(error.message || "Login failed!");
+            }
+        } catch (err) {
+            setError("Something went wrong. Please try again.");
+        }
     };
 
     const handleGoogleLogin = async () => {
@@ -58,11 +80,11 @@ const LoginPage = () => {
                     </p>
                 </div>
 
-                {/* {error && (
+                {error && (
                     <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-600 dark:text-red-400">
                         {error}
                     </div>
-                )} */}
+                )}
 
                 <Form onSubmit={handleLogin} className="flex flex-col gap-4">
                     <TextField
@@ -71,7 +93,11 @@ const LoginPage = () => {
                         type="email"
                         className="w-full"
                         validate={(value) => {
-                            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                            if (
+                                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                                    value,
+                                )
+                            ) {
                                 return "Please enter a valid email address";
                             }
                             return null;
@@ -97,9 +123,7 @@ const LoginPage = () => {
                             <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 block">
                                 Password
                             </Label>
-                            <p 
-                                className="text-xs font-medium text-green-600 dark:text-green-500 hover:underline"
-                            >
+                            <p className="text-xs font-medium text-green-600 dark:text-green-500 hover:underline">
                                 Forgot Password?
                             </p>
                         </div>
@@ -114,7 +138,9 @@ const LoginPage = () => {
                         type="submit"
                         className="w-full rounded-lg bg-green-600 text-white font-semibold py-2.5 hover:bg-green-700 transition flex items-center justify-center gap-2 mt-2"
                     >
-                        Login
+                        {
+                            isLoading ? "Login..." : "Login"
+                        }
                     </Button>
                 </Form>
 
