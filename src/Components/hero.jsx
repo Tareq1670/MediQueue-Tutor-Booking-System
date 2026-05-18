@@ -12,58 +12,50 @@ import Link from "next/link";
 
 const Hero = () => {
     const slides = [
-        {
-            id: 1,
-            image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1920",
-            tag: "Empower Your Mind",
-            title: "Learn From The Best Tutors Worldwide",
-            description:
-                "Connect with expert mentors and accelerate your learning journey with personalized 1-on-1 sessions designed just for your success.",
-        },
-        {
-            id: 2,
-            image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1920",
-            tag: "Flexible Learning",
-            title: "Master New Skills At Your Own Pace",
-            description:
-                "Explore interactive live courses, comprehensive study resources, and get real-time guidance from industry professionals.",
-        },
-        {
-            id: 3,
-            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920",
-            tag: "Achieve Excellence",
-            title: "Transform Your Future With SkillSphere",
-            description:
-                "Join thousands of students achieving their academic and professional goals through our next-generation online learning platform.",
-        },
-        {
-            id: 4,
-            image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1920",
-            tag: "Smart Healthcare",
-            title: "Skip The Waiting Room With MediQueue",
-            description:
-                "Book your doctor appointments instantly and track your serial queue in real-time. No more endless waiting at the chamber.",
-        },
-        {
-            id: 5,
-            image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1920",
-            tag: "Expert Care",
-            title: "Connect With Top Certified Specialists",
-            description:
-                "Find and consult with experienced doctors across multiple specialties, tailored to your specific health needs and schedule.",
-        },
-        {
-            id: 6,
-            image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1920",
-            tag: "Effortless Booking",
-            title: "Your Health Journey, Simplified",
-            description:
-                "Manage prescriptions, booking history, and live queue updates all from one single, easy-to-use digital dashboard.",
-        },
-    ];
+    {
+        id: 1,
+        image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1920",
+        tag: "Empower Your Mind",
+        title: "Learn From The Best Tutors Worldwide",
+        description:
+            "Connect with expert mentors and accelerate your learning journey with personalized 1-on-1 sessions designed just for your success.",
+    },
+    {
+        id: 2,
+        image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1920",
+        tag: "Flexible Learning",
+        title: "Master New Skills At Your Own Pace",
+        description:
+            "Explore interactive live courses, comprehensive study resources, and get real-time guidance from industry professionals.",
+    },
+    {
+        id: 3,
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920",
+        tag: "Achieve Excellence",
+        title: "Transform Your Future With MediQueue",
+        description:
+            "Join thousands of students achieving their academic and professional goals through our next-generation online learning platform.",
+    },
+    {
+        id: 4,
+        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1920",
+        tag: "Smart Scheduling",
+        title: "Skip The Waiting Queue With MediQueue",
+        description:
+            "Book your preferred academic tutors instantly, secure your digital session tokens, and track your live class schedule without any manual hassle.",
+    },
+    {
+        id: 5,
+        image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1920",
+        tag: "Expert Mentorship",
+        title: "Connect With Certified Subject Specialists",
+        description:
+            "From Mathematics and Physics to complex coding languages—find and consult with verified top-tier educators tailored to your exam prep.",
+    }
+];
 
     return (
-        <div className="relative w-full h-[400px] sm:h-[500px] md:h-[500px] lg:h-[650px] overflow-hidden bg-slate-950 rounded-lg">
+        <div className="container mx-auto relative w-full h-[400px] sm:h-[500px] md:h-[500px] lg:h-[650px] overflow-hidden bg-slate-950 rounded-lg">
             <Swiper
                 key="hero-swiper-unique"
                 modules={[Autoplay, EffectFade, Pagination]}
@@ -113,7 +105,7 @@ const Hero = () => {
                                     {slide.title}
                                 </h1>
 
-                                <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-xl font-light leading-relaxed">
+                                <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
                                     {slide.description}
                                 </p>
 

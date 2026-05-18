@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { Button } from "@heroui/react";
 import { FaXTwitter } from "react-icons/fa6";
@@ -15,7 +14,7 @@ const Footer = () => {
                             MediQueue
                         </span>
                         <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-xs leading-relaxed">
-                            Connecting learners with expert medical tutors seamlessly. Streamline your academic queue.
+                            Connecting learners with expert tutors seamlessly across any subject. Streamline your academic schedule.
                         </p>
                     </div>
 
@@ -27,7 +26,6 @@ const Footer = () => {
                             <li>Booked Sessions</li>
                         </ul>
                     </div>
-
 
                     <div className="flex flex-col space-y-4">
                         <div className="flex flex-col space-y-1">

@@ -1,9 +1,13 @@
+import BoldDesk from "@/Components/BoldDesk";
 import Hero from "@/Components/hero";
+import TrustAndPartners from "@/Components/TrustAndPartners";
 
 export default function Home() {
   return (
-    <div className="container mx-auto my-5">
+    <div className="my-5">
       <Hero/>
+      <BoldDesk/>
+      <TrustAndPartners/>
     </div>
   );
 }
