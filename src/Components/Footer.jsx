@@ -6,8 +6,8 @@ import { FiFacebook, FiLinkedin } from "react-icons/fi";
 
 const Footer = () => {
     return (
-        <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md transition-colors duration-300 w-full">
-            <div className="container mx-auto px-4 md:px-6 py-12">
+        <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md transition-colors duration-300 w-full mt-5">
+            <div className="container mx-auto px-2 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
 
                     <div className="flex flex-col space-y-3">

@@ -69,7 +69,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-300px)] flex items-center justify-center md-0 md:px-4 py-4 md:py-12 transition-colors duration-300">
+        <div className="min-h-[90vh] flex items-center justify-center md-0 md:px-4 py-4 md:py-12 transition-colors duration-300">
             <div className="w-full max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-xl p-6 md:p-8">
                 <div className="text-center mb-6">
                     <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
