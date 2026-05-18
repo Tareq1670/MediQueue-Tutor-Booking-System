@@ -36,7 +36,6 @@ const RegisterPage = () => {
         });
 
         setLoading(false);
-        console.log({ data, error });
 
         try {
             if (data) {
@@ -59,6 +58,12 @@ const RegisterPage = () => {
         } catch (err) {
             setError(err.message || "Registration failed");
         }
+    };
+
+    const googleLogin = async () => {
+        const { data, error } = await authClient.signIn.social({
+            provider: "google",
+        });
     };
 
     return (
@@ -186,6 +191,7 @@ const RegisterPage = () => {
                 </div>
 
                 <Button
+                    onClick={googleLogin}
                     variant="flat"
                     className="w-full rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium py-2.5 hover:bg-zinc-200 dark:hover:bg-zinc-700/80 transition flex items-center justify-center gap-2"
                 >

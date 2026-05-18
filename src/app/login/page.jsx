@@ -23,7 +23,7 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("");
-        setLoading(true)
+        setLoading(true);
 
         const formData = new FormData(e.currentTarget);
         const loginData = Object.fromEntries(formData.entries());
@@ -32,9 +32,9 @@ const LoginPage = () => {
             email: loginData.email,
             password: loginData.password,
         });
-        setLoading(false)
+        setLoading(false);
 
-        console.log({data, error});
+        console.log({ data, error });
 
         try {
             if (data) {
@@ -60,12 +60,9 @@ const LoginPage = () => {
     };
 
     const handleGoogleLogin = async () => {
-        setError("");
-        try {
-            router.push("/");
-        } catch (err) {
-            setError("Google sign-in failed. Please try again.");
-        }
+        const { data, error } = await authClient.signIn.social({
+            provider: "google",
+        });
     };
 
     return (
@@ -138,9 +135,7 @@ const LoginPage = () => {
                         type="submit"
                         className="w-full rounded-lg bg-green-600 text-white font-semibold py-2.5 hover:bg-green-700 transition flex items-center justify-center gap-2 mt-2"
                     >
-                        {
-                            isLoading ? "Login..." : "Login"
-                        }
+                        {isLoading ? "Login..." : "Login"}
                     </Button>
                 </Form>
 
