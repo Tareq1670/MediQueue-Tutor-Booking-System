@@ -12,7 +12,7 @@ const TutorsCard = ({ tutor }) => {
     return (
         <div className="bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/60 dark:border-zinc-800/40 rounded-lg shadow-sm hover:shadow-md hover:border-green-500/30 dark:hover:border-green-500/20 hover:bg-white dark:hover:bg-zinc-900/40 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden h-full">
             <div className="space-y-4 relative z-10 w-full">
-                <div className="relative w-full h-48 overflow-hidden bg-zinc-100">
+                <div className="relative w-full h-48 overflow-hidden">
                     <div className="relative aspect-4/3">
                         <Image
                             src={image}
