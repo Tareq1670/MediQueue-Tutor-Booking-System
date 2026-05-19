@@ -21,9 +21,9 @@ const Footer = () => {
                     <div className="flex flex-col space-y-3">
                         <h4 className="text-zinc-800 dark:text-zinc-200 font-semibold text-base">Tutor Services</h4>
                         <ul className="flex flex-col space-y-2 text-sm text-zinc-500 dark:text-zinc-400">
-                            <li>Find Tutors</li>
-                            <li>Become a Tutor</li>
-                            <li>Booked Sessions</li>
+                            <Link href={"/tutors"}><li>Find Tutors</li></Link>
+                            <Link href={"/add-tutors"}><li>Become a Tutor</li></Link>
+                            <Link href={"/my-booked-sessions"}><li>Booked Sessions</li></Link>
                         </ul>
                     </div>
 

@@ -2,11 +2,11 @@ import { Star, ShieldCheck, Milestone, Award } from "lucide-react";
 
 const TrustAndPartners = () => {
     return (
-        <section className="w-full bg-zinc-50 dark:bg-zinc-950/40 border-y border-zinc-200/60 dark:border-zinc-800/40 py-12 md:py-16 transition-colors duration-300">
+        <section className="w-full bg-zinc-200/10 dark:bg-zinc-950/40 border-y border-zinc-200/60 dark:border-zinc-800/40 py-12 md:py-16 transition-colors duration-300">
             <div className="container mx-auto px-4 md:px-6 max-w-7xl">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
                     
-                    {/* Left Column: Heading & Tech/Edu Brand Partners */}
+
                     <div className="space-y-6 text-center lg:text-left">
                         <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-white tracking-tight max-w-md mx-auto lg:mx-0 leading-tight">
                             The world's trusted platform for{" "}
