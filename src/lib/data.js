@@ -30,3 +30,11 @@ export const getMyTutors = async(id) => {
     const data = await res.json();
     return data;
 }
+
+
+export const getTutorsDetail = async(id) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/tutor-details/${id}`);
+    const data = await res.json();
+    return data;
+}
+

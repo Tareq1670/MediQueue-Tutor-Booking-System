@@ -138,7 +138,7 @@ const TutorsPage = () => {
                                 className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-lg overflow-hidden flex flex-col shadow-sm transition-colors duration-300"
                             >
                                 <Skeleton className="w-full h-48 md:h-52 bg-zinc-200 dark:bg-zinc-800" />
-                                <div className="p-5 flex-1 flex flex-col justify-between gap-5">
+                                <div className="p-5 flex-1 flex flex-col justify-between gap-5 animate-pulse">
                                     <div className="space-y-4">
                                         <div className="flex justify-between items-center">
                                             <Skeleton className="h-4 w-24 rounded bg-zinc-200 dark:bg-zinc-800" />
