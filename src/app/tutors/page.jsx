@@ -132,7 +132,7 @@ const TutorsPage = () => {
 
                 {loading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 relative z-10">
-                        {Array.from({ length: 3 }).map((_, index) => (
+                        {Array.from({ length: 6 }).map((_, index) => (
                             <div
                                 key={index}
                                 className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-lg overflow-hidden flex flex-col shadow-sm transition-colors duration-300"

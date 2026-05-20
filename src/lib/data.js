@@ -1,6 +1,6 @@
 export const homeData = async () => {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/home-tutors`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/home-tutors`,{cache:"no-store"},
     );
     const data = await res.json();
     return data;
@@ -22,3 +22,11 @@ export const getTutors = async (search = "", startDate = "", endDate = "") => {
 
     return res.json();
 };
+
+
+
+export const getMyTutors = async(id) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/my-tutors/${id}`);
+    const data = await res.json();
+    return data;
+}
