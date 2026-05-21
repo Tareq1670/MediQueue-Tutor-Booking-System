@@ -38,3 +38,16 @@ export const getTutorsDetail = async(id) => {
     return data;
 }
 
+export const getAllBooking = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-booking`);
+    const data = await res.json();
+    return data
+}
+
+
+export const getUserBook = async(id) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user-book/${id}`);
+
+    const data = await res.json();
+    return data;
+}

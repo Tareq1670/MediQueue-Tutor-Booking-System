@@ -1,7 +1,6 @@
 import BookingModal from "@/Components/BookingModal";
 import { auth } from "@/lib/auth";
-import { getTutorsDetail } from "@/lib/data";
-import { Button } from "@heroui/react";
+import { getAllBooking, getTutorsDetail } from "@/lib/data";
 import { 
     BookOpen, 
     MapPin, 
@@ -30,6 +29,10 @@ const DetailsPage = async ({ params }) => {
     const session =await auth.api.getSession({
         headers : await headers()
     });
+    const allBooking = await getAllBooking();
+
+
+
     const user = session?.user;
     const {
         name,
@@ -239,7 +242,7 @@ const DetailsPage = async ({ params }) => {
                                 </div>
                             </div>
 
-                            <BookingModal tutor={tutor} user={user}/>
+                            <BookingModal tutor={tutor} user={user} allBooking={allBooking}/>
 
                             <div className="mt-5 flex items-center justify-center gap-1.5 text-center text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-wider">
                                 <ShieldCheck size={12} className="text-green-500 flex-shrink-0" />

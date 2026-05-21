@@ -13,9 +13,13 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const BookingModal = ({ tutor, user }) => {
+const BookingModal = ({ tutor, user,allBooking }) => {
     const [error, setError] = useState();
+    const [exit, setExit] = useState()
+    const [loading , setLoading] = useState(false)
     const router = useRouter()
+
+    const isExist = allBooking.find(item => item.tutorId === tutor._id);
 
     const currentDate = new Date();
     const sessionStartDate = new Date(tutor?.startDate);
@@ -27,10 +31,14 @@ const BookingModal = ({ tutor, user }) => {
                 "Booking session has expired! Please try another available session.",
             );
         }
+        if(isExist){
+            setExit("Your have already booked this session!")
+        }
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
 
         const formData = new FormData(e.currentTarget);
         const bookData = Object.fromEntries(formData.entries());
@@ -41,7 +49,8 @@ const BookingModal = ({ tutor, user }) => {
             phone : bookData.phone,
             tutorId : tutor?._id,
             tutorName : tutor?.name,
-            studentEmail : user?.email
+            studentEmail : user?.email,
+            userId : user?.id
 
         }
         
@@ -51,7 +60,7 @@ const BookingModal = ({ tutor, user }) => {
             body : JSON.stringify(bookingData)
         });
         const data = await res.json();
-        console.log(data);
+        setLoading(false)
 
 
 
@@ -73,7 +82,7 @@ const BookingModal = ({ tutor, user }) => {
         }
     };
 
-    console.log(tutor.totalSlot);
+
 
     return (
         <div>
@@ -95,6 +104,11 @@ const BookingModal = ({ tutor, user }) => {
                                 {error && (
                                     <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-600 dark:text-red-400">
                                         {error}
+                                    </div>
+                                )}
+                                {exit && (
+                                    <div className="mb-4 p-3 bg-red-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg text-sm text-green-600 dark:text-green-400">
+                                        {exit}
                                     </div>
                                 )}
                             </Modal.Header>
@@ -173,14 +187,14 @@ const BookingModal = ({ tutor, user }) => {
                                                 Cancel
                                             </Button>
                                             <Button
-                                                isDisabled={error}
+                                                isDisabled={error || exit}
                                                 slot="close"
                                                 type="submit"
                                                 className="px-5 h-11 rounded-xl  bg-green-600 hover:bg-green-500 text-white text-xs font-bold tracking-wide shadow-md shadow-emerald-600/10 dark:shadow-none active:scale-[0.98] transition-all duration-200"
                                             >
                                                 {error
-                                                    ? "Go Back"
-                                                    : "Confirm Booking"}
+                                                    ? "Go Back" : exit ? "Booked Session"
+                                                    : loading ? "Booking..." : "Confirm Booking"}
                                             </Button>
                                         </div>
                                     </Form>
