@@ -54,6 +54,7 @@ const LoginPage = () => {
                         "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
                 });
                 router.push(redirect);
+                router.refresh()
             } else {
                 throw new Error(error.message || "Login failed!");
             }
