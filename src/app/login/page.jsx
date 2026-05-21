@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
@@ -19,6 +19,9 @@ const LoginPage = () => {
     const router = useRouter();
     const [error, setError] = useState("");
     const [isLoading, setLoading] = useState(false);
+
+    const searchParams = useSearchParams()
+    const redirect = searchParams.get("redirect")|| "/";
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -50,7 +53,7 @@ const LoginPage = () => {
                     className:
                         "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
                 });
-                router.push("/");
+                router.push(redirect);
             } else {
                 throw new Error(error.message || "Login failed!");
             }
@@ -159,7 +162,7 @@ const LoginPage = () => {
                 <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-6">
                     Don&apos;t have an account?{" "}
                     <Link
-                        href="/register"
+                        href={`/register?redirect=${encodeURIComponent(redirect)}`}
                         className="text-green-600 dark:text-green-500 font-medium hover:underline"
                     >
                         Register

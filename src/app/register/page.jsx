@@ -11,7 +11,7 @@ import {
     TextField,
 } from "@heroui/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
@@ -20,6 +20,9 @@ const RegisterPage = () => {
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const router = useRouter();
+
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get("redirect")||"/login"
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -51,7 +54,7 @@ const RegisterPage = () => {
                     className:
                         "dark:bg-slate-800 dark:text-white dark:border-slate-700 font-sans shadow-xl",
                 });
-                router.push("/login");
+                router.push(`/login?redirect=${encodeURIComponent(redirect)}`);
             } else {
                 throw new Error(error.message);
             }
