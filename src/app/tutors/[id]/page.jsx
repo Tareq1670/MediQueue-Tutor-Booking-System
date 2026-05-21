@@ -30,6 +30,8 @@ const DetailsPage = async ({ params }) => {
         headers : await headers()
     });
     const allBooking = await getAllBooking();
+    const bookUser = await getAllBooking()
+    console.log(bookUser);
 
 
 
@@ -242,7 +244,7 @@ const DetailsPage = async ({ params }) => {
                                 </div>
                             </div>
 
-                            <BookingModal tutor={tutor} user={user} allBooking={allBooking}/>
+                            <BookingModal tutor={tutor} user={user} allBooking={allBooking} bookUser={bookUser}/>
 
                             <div className="mt-5 flex items-center justify-center gap-1.5 text-center text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-wider">
                                 <ShieldCheck size={12} className="text-green-500 flex-shrink-0" />

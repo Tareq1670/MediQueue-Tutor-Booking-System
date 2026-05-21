@@ -10,12 +10,16 @@ const MyBookedTable = ({ allBook }) => {
                     My Booked Tutors
                 </h2>
                 <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base font-normal max-w-xl leading-relaxed">
-                    Overview and manage all the expert tutors you have booked in the system.
+                    Overview and manage all the expert tutors you have booked in
+                    the system.
                 </p>
             </div>
 
             <div className="bg-zinc-50/30 dark:bg-zinc-900/10 border border-zinc-200/60 dark:border-zinc-800/40 rounded-2xl shadow-sm overflow-hidden p-1 backdrop-blur-md">
-                <Table aria-label="Booked tutors management table" className="w-full">
+                <Table
+                    aria-label="Booked tutors management table"
+                    className="w-full"
+                >
                     <Table.ScrollContainer>
                         <Table.Content
                             aria-label="Booked tutors table"
@@ -67,12 +71,14 @@ const MyBookedTable = ({ allBook }) => {
                                             </span>
                                         </Table.Cell>
                                         <Table.Cell className="py-4 text-zinc-600 dark:text-zinc-400 text-sm">
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400 asset-status border border-amber-200/50 dark:border-amber-800/30">
+                                            <span
+                                                className={`${book.status === "Cancel" ? "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-amber-800 dark:text-red-400 asset-status border border-red-200/50 dark:border-red-800/30" : "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400 asset-status border border-amber-200/50 dark:border-amber-800/30"}`}
+                                            >
                                                 {book.status || "Pending"}
                                             </span>
                                         </Table.Cell>
                                         <Table.Cell className="py-4">
-                                                <BookedAction allBook={allBook}/>
+                                            <BookedAction book={book} />
                                         </Table.Cell>
                                     </Table.Row>
                                 ))}

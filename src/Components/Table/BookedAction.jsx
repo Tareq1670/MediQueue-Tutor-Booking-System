@@ -1,10 +1,46 @@
+"use client"
+
 import { Button } from "@heroui/react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { ImCancelCircle } from "react-icons/im";
 
-const BookedAction = ({allBook}) => {
+const BookedAction = ({book}) => {
+    const router = useRouter()
+
+    const removeBook = async () => {
+        console.log("book cancel");
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user-book-update/${book._id}`,{
+            method:"PATCH",
+            headers : {"Content-Type" : "application/json"}
+        });
+        const data = await res.json();
+        console.log(data);
+        if(data.modifiedCount > 0){
+            toast.success("Booked cancel successfully!", {
+                    duration: 3000,
+                    position: "top-center",
+                    style: {
+                        background: "var(--toast-bg, #ffffff)",
+                        color: "var(--toast-color, #1e293b)",
+                        borderRadius: "12px",
+                        border: "1px solid #e2e8f0",
+                    },
+                    className:
+                        "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
+                });
+            router.refresh();
+        }
+    }
+
+
+
     return (
         <div>
             <Button
+            onClick={removeBook}
+            isDisabled={book.status === "Cancel"}
                 isIconOnly
                 size="sm"
                 variant="flat"
