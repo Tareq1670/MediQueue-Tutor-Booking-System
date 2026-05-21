@@ -162,10 +162,31 @@ const TutorsPage = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-16 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-lg">
-                        <p className="text-zinc-500 dark:text-zinc-400 font-medium">
-                            No tutors found matching your filters.
+                    <div className="flex flex-col items-center justify-center text-center py-20 px-4 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl bg-zinc-50/30 dark:bg-zinc-900/10 backdrop-blur-sm max-full mx-auto transition-all duration-300">
+                        <div className="relative mb-5 flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/50 text-amber-500 dark:text-amber-400 shadow-sm">
+                            <Search className="w-8 h-8 opacity-40 absolute" />
+                            <div className="absolute right-3 bottom-3 w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400 animate-ping" />
+                            <div className="absolute right-3 bottom-3 w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400" />
+                        </div>
+
+                        <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight mb-2">
+                            No Tutors Found
+                        </h3>
+
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mb-6 leading-relaxed">
+                            We couldn't find any tutors matching your search
+                            terms or date range. Try adjusting your filters or
+                            resetting them.
                         </p>
+
+                        <Button
+                            onClick={handleReset}
+                            size="sm"
+                            className="h-10 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium px-5 transition-all shadow-sm flex items-center gap-2"
+                        >
+                            <RotateCcw className="w-3.5 h-3.5" />
+                            Clear All Filters
+                        </Button>
                     </div>
                 )}
             </div>
