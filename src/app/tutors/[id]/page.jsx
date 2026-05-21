@@ -31,7 +31,6 @@ const DetailsPage = async ({ params }) => {
     });
     const allBooking = await getAllBooking();
     const bookUser = await getAllBooking()
-    console.log(bookUser);
 
 
 

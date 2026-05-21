@@ -9,11 +9,11 @@ const BookedAction = ({book}) => {
     const router = useRouter()
 
     const removeBook = async () => {
-        console.log("book cancel");
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user-book-update/${book._id}`,{
             method:"PATCH",
-            headers : {"Content-Type" : "application/json"}
+            headers : {"Content-Type" : "application/json"},
+            body : JSON.stringify({tutorId: book.tutorId})
         });
         const data = await res.json();
         console.log(data);

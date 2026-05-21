@@ -19,7 +19,9 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const isExist = allBooking?.find(item => item.tutorId === tutor?._id);
+    const isExist = allBooking?.find(
+        item => item.tutorId === tutor?._id && item.status === "Confirm"
+    );
 
     useEffect(() => {
         if (tutor?.startDate) {
@@ -161,6 +163,7 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                                             <Button
                                                 isDisabled={error || exit || loading}
                                                 type="submit"
+                                                slot={"close"}
                                                 className={`px-5 h-11 rounded-xl text-white text-xs font-bold tracking-wide shadow-md active:scale-[0.98] transition-all duration-200 ${
                                                     exit || error 
                                                     ? "bg-amber-500 hover:bg-amber-500 cursor-not-allowed" 

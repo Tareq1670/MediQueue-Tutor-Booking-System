@@ -3,7 +3,7 @@
 import { Table, Skeleton } from "@heroui/react";
 
 const MyTutorsSkeletonTable = () => {
-    const skeletonRows = Array.from({ length: 5 });
+    const skeletonRows = Array.from({ length: 10 });
 
     return (
         <section className="container mx-auto w-full py-12 md:py-16 px-4 md:px-6 max-w-7xl transition-colors duration-300">
@@ -15,7 +15,7 @@ const MyTutorsSkeletonTable = () => {
             <div className="bg-zinc-50/30 dark:bg-zinc-900/10 border border-zinc-200/60 dark:border-zinc-800/40 rounded-2xl shadow-sm overflow-hidden p-1 backdrop-blur-md">
                 <Table aria-label="Loading tutors table" className="w-full">
                     <Table.ScrollContainer>
-                        <Table.Content className="min-w-[800px]">
+                        <Table.Content className="min-w-[800px]  animate-pulse">
                             <Table.Header>
                                 <Table.Column isRowHeader className="bg-zinc-100/80 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 font-semibold h-12 first:rounded-l-xl last:rounded-r-xl">
                                     Tutor's Name
