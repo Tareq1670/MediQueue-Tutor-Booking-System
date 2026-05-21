@@ -20,7 +20,7 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
     const router = useRouter();
 
     const isExist = allBooking?.find(
-        item => item.tutorId === tutor?._id && item.status === "Confirm"
+        item => item.userId === user?.id && item.tutorId === tutor?._id && item.status === "Confirm"
     );
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
         } else {
             setExit("");
         }
-    }, [tutor, allBooking, isExist]);
+    } , [tutor, allBooking, isExist]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
