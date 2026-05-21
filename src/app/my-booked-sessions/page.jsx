@@ -29,8 +29,11 @@ const MyBookedPage = async () => {
     const session = await auth.api.getSession({
         headers: await headers()
     });
+    const {token} = await auth.api.getToken({
+        headers: await headers()
+    });
 
-    const allBookUser = await getUserBook(session?.user?.id);
+    const allBookUser = await getUserBook(session?.user?.id, token);
 
 
     return (

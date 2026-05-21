@@ -52,12 +52,16 @@ export async function generateMetadata({ params }) {
 
 const DetailsPage = async ({ params }) => {
     const { id } = await params;
-    const tutor = await getTutorsDetail(id);
+    const { token } = await auth.api.getToken({
+        headers: await headers(),
+    });
+    const tutor = await getTutorsDetail(id,token);
     const session = await auth.api.getSession({
         headers: await headers(),
     });
-    const allBooking = await getAllBooking();
+    const allBooking = await getAllBooking(token);
     const bookUser = await getAllBooking();
+
 
     const user = session?.user;
     const {

@@ -37,39 +37,44 @@ const AddTutorPage = () => {
         if (selectedDate) {
             tutorData.startDate = selectedDate.toISOString().split("T")[0];
         }
+        const { data: tokenData } = await authClient.token();
+        const token = tokenData?.token;
 
         try {
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_SERVER_URL}/add-tutors`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
+            if (token) {
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/add-tutors`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify(tutorData),
                     },
-                    body: JSON.stringify(tutorData),
-                },
-            );
-            const data = await res.json();
-            setLoading(false);
+                );
+                const data = await res.json();
+                setLoading(false);
 
-            if (data.insertedId) {
-                toast.success("Tutor added successfully!", {
-                    duration: 4000,
-                    position: "top-center",
-                    style: {
-                        background: "var(--toast-bg, #ffffff)",
-                        color: "var(--toast-color, #1e293b)",
-                        borderRadius: "12px",
-                        border: "1px solid #e2e8f0",
-                    },
-                    className:
-                        "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
-                });
-                formElement.reset();
-                setSelectedDate(new Date());
-                router.refresh();
-            } else {
-                setError("Failed to add tutor. Please try again.");
+                if (data.insertedId) {
+                    toast.success("Tutor added successfully!", {
+                        duration: 4000,
+                        position: "top-center",
+                        style: {
+                            background: "var(--toast-bg, #ffffff)",
+                            color: "var(--toast-color, #1e293b)",
+                            borderRadius: "12px",
+                            border: "1px solid #e2e8f0",
+                        },
+                        className:
+                            "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
+                    });
+                    formElement.reset();
+                    setSelectedDate(new Date());
+                    router.refresh();
+                } else {
+                    setError("Failed to add tutor. Please try again.");
+                }
             }
         } catch (err) {
             setLoading(false);

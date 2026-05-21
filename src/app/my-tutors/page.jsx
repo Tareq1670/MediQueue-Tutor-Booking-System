@@ -27,8 +27,12 @@ const MyTutors =async () => {
     const session = await auth.api.getSession({
         headers : await headers()
     })
+    const {token} = await auth.api.getToken({
+        headers : await headers()
+    })
 
-    const myTutors = await getMyTutors(session?.user?.id);
+
+    const myTutors = await getMyTutors(session?.user?.id , token);
     return (
         <div>
             <MyTutorsTable myTutors={myTutors}/>
