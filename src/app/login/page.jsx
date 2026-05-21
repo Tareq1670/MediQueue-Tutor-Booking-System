@@ -10,7 +10,7 @@ import {
 } from "@heroui/react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
@@ -19,9 +19,10 @@ const LoginPage = () => {
     const router = useRouter();
     const [error, setError] = useState("");
     const [isLoading, setLoading] = useState(false);
+    const [isPending, startTransition] = useTransition();
 
-    const searchParams = useSearchParams()
-    const redirect = searchParams.get("redirect")|| "/";
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get("redirect") || "/";
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -31,41 +32,43 @@ const LoginPage = () => {
         const formData = new FormData(e.currentTarget);
         const loginData = Object.fromEntries(formData.entries());
 
-        const { data, error } = await authClient.signIn.email({
+        const { data, error: authError } = await authClient.signIn.email({
             email: loginData.email,
             password: loginData.password,
         });
+
         setLoading(false);
 
-        console.log({ data, error });
+        if (authError) {
+            setError(authError.message || "Login failed!");
+            return;
+        }
 
-        try {
-            if (data) {
-                toast.success("Welcome back to MediQueue!", {
-                    duration: 3000,
-                    position: "top-center",
-                    style: {
-                        background: "var(--toast-bg, #ffffff)",
-                        color: "var(--toast-color, #1e293b)",
-                        borderRadius: "12px",
-                        border: "1px solid #e2e8f0",
-                    },
-                    className:
-                        "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
-                });
-                router.push(redirect);
-                router.refresh()
-            } else {
-                throw new Error(error.message || "Login failed!");
-            }
-        } catch (err) {
-            setError("Something went wrong. Please try again.");
+        if (data) {
+            toast.success("Welcome back to MediQueue!", {
+                duration: 3000,
+                position: "top-center",
+                style: {
+                    background: "var(--toast-bg, #ffffff)",
+                    color: "var(--toast-color, #1e293b)",
+                    borderRadius: "12px",
+                    border: "1px solid #e2e8f0",
+                },
+                className:
+                    "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
+            });
+
+            startTransition(() => {
+                router.replace(redirect);
+                router.refresh();
+            });
         }
     };
 
     const handleGoogleLogin = async () => {
-        const { data, error } = await authClient.signIn.social({
+        await authClient.signIn.social({
             provider: "google",
+            callbackURL: redirect,
         });
     };
 
@@ -124,7 +127,7 @@ const LoginPage = () => {
                             <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 block">
                                 Password
                             </Label>
-                            <p className="text-xs font-medium text-green-600 dark:text-green-500 hover:underline">
+                            <p className="text-xs font-medium text-green-600 dark:text-green-500 hover:underline cursor-pointer">
                                 Forgot Password?
                             </p>
                         </div>
@@ -137,9 +140,10 @@ const LoginPage = () => {
 
                     <Button
                         type="submit"
+                        disabled={isLoading || isPending}
                         className="w-full rounded-lg bg-green-600 text-white font-semibold py-2.5 hover:bg-green-700 transition flex items-center justify-center gap-2 mt-2"
                     >
-                        {isLoading ? "Login..." : "Login"}
+                        {isLoading || isPending ? "Logging in..." : "Login"}
                     </Button>
                 </Form>
 
