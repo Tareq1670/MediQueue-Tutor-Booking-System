@@ -114,32 +114,40 @@ const Navbar = () => {
                                     Tutors
                                 </Link>
                             </li>
-                            <li>
-                                <Link
-                                    href="/add-tutors"
-                                    className={getLinkClass("/add-tutors")}
-                                >
-                                    Add Tutor
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/my-tutors"
-                                    className={getLinkClass("/my-tutors")}
-                                >
-                                    My Tutors
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/my-booked-sessions"
-                                    className={getLinkClass(
-                                        "/my-booked-sessions",
-                                    )}
-                                >
-                                    My Booked Sessions
-                                </Link>
-                            </li>
+                            {user && (
+                                <>
+                                    <li>
+                                        <Link
+                                            href="/add-tutors"
+                                            className={getLinkClass(
+                                                "/add-tutors",
+                                            )}
+                                        >
+                                            Add Tutor
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            href="/my-tutors"
+                                            className={getLinkClass(
+                                                "/my-tutors",
+                                            )}
+                                        >
+                                            My Tutors
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            href="/my-booked-sessions"
+                                            className={getLinkClass(
+                                                "/my-booked-sessions",
+                                            )}
+                                        >
+                                            My Booked Sessions
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
                         </>
                     )}
                 </ul>
@@ -167,7 +175,6 @@ const Navbar = () => {
                             </Button>
                         )}
                     </div>
-
                     {isPending ? (
                         <Skeleton className="w-9 h-9 rounded-full bg-zinc-200 dark:bg-zinc-800" />
                     ) : !user ? (
@@ -199,7 +206,6 @@ const Navbar = () => {
                                     </Avatar.Fallback>
                                 </Avatar>
                             </div>
-
                             {isProfileOpen && (
                                 <div className="absolute right-0 mt-3 w-48 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/50 rounded-2xl shadow-xl py-2 animate-in fade-in slide-in-from-top-2 duration-200 overflow-hidden text-center">
                                     <Link
@@ -252,17 +258,10 @@ const Navbar = () => {
             </div>
 
             <div
-                className={`lg:hidden rounded-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 px-6 pb-8 pt-4 absolute w-full md:w-80 right-0 shadow-xl transition-all duration-300 ease-in-out ${
-                    isMenuOpen
-                        ? "opacity-100 translate-x-0 visible"
-                        : "opacity-0 translate-x-full invisible"
-                }`}
+                className={`lg:hidden rounded-lg bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 px-6 pb-8 pt-4 absolute w-full md:w-80 right-0 shadow-xl transition-all duration-300 ease-in-out ${isMenuOpen ? "opacity-100 translate-x-0 visible" : "opacity-0 translate-x-full invisible"}`}
             >
                 {isPending ? (
-                    <div className="flex flex-col items-center justify-center border-b border-zinc-100 dark:border-zinc-800 pb-4 mb-6">
-                        <Skeleton className="w-16 h-16 mb-2 rounded-full bg-zinc-200 dark:bg-zinc-800" />
-                        <Skeleton className="w-24 h-4 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
-                    </div>
+                    <Skeleton className="w-full h-24 mb-6 rounded-xl bg-zinc-200 dark:bg-zinc-800" />
                 ) : (
                     user && (
                         <div className="flex flex-col items-center justify-center border-b border-zinc-100 dark:border-zinc-800 pb-4 mb-6">
@@ -281,7 +280,6 @@ const Navbar = () => {
                         </div>
                     )
                 )}
-
                 <ul className="flex flex-col space-y-4 font-medium mb-8 text-center items-center">
                     <li>
                         <Link
@@ -301,81 +299,55 @@ const Navbar = () => {
                             Tutors
                         </Link>
                     </li>
-                    {isPending ? (
+                    {user && (
                         <>
                             <li>
-                                <Skeleton className="w-24 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+                                <Link
+                                    href="/add-tutors"
+                                    className={getLinkClass(
+                                        "/add-tutors",
+                                        true,
+                                    )}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    Add Tutor
+                                </Link>
                             </li>
                             <li>
-                                <Skeleton className="w-24 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+                                <Link
+                                    href="/my-tutors"
+                                    className={getLinkClass("/my-tutors", true)}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    My Tutors
+                                </Link>
                             </li>
                             <li>
-                                <Skeleton className="w-40 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+                                <Link
+                                    href="/my-booked-sessions"
+                                    className={getLinkClass(
+                                        "/my-booked-sessions",
+                                        true,
+                                    )}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    My Booked Sessions
+                                </Link>
                             </li>
                             <li>
-                                <Skeleton className="w-20 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+                                <Link
+                                    href="/profile"
+                                    className={getLinkClass("/profile", true)}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    Profile
+                                </Link>
                             </li>
                         </>
-                    ) : (
-                        user && (
-                            <>
-                                <li>
-                                    <Link
-                                        href="/add-tutors"
-                                        className={getLinkClass(
-                                            "/add-tutors",
-                                            true,
-                                        )}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Add Tutor
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/my-tutors"
-                                        className={getLinkClass(
-                                            "/my-tutors",
-                                            true,
-                                        )}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        My Tutors
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/my-booked-sessions"
-                                        className={getLinkClass(
-                                            "/my-booked-sessions",
-                                            true,
-                                        )}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        My Booked Sessions
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/profile"
-                                        className={getLinkClass(
-                                            "/profile",
-                                            true,
-                                        )}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Profile
-                                    </Link>
-                                </li>
-                            </>
-                        )
                     )}
                 </ul>
-
                 {isPending ? (
-                    <div className="flex flex-col space-y-3">
-                        <Skeleton className="w-full h-10 rounded-xl bg-zinc-200 dark:bg-zinc-800" />
-                    </div>
+                    <Skeleton className="w-full h-10 rounded-xl bg-zinc-200 dark:bg-zinc-800" />
                 ) : !user ? (
                     <div className="flex flex-col space-y-3">
                         <Link

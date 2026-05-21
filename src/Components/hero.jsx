@@ -3,56 +3,75 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import { Button } from "@heroui/react";
 import Link from "next/link";
+import { useState } from "react";
 
 const Hero = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
+
     const slides = [
-    {
-        id: 1,
-        image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1920",
-        tag: "Empower Your Mind",
-        title: "Learn From The Best Tutors Worldwide",
-        description:
-            "Connect with expert mentors and accelerate your learning journey with personalized 1-on-1 sessions designed just for your success.",
-    },
-    {
-        id: 2,
-        image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1920",
-        tag: "Flexible Learning",
-        title: "Master New Skills At Your Own Pace",
-        description:
-            "Explore interactive live courses, comprehensive study resources, and get real-time guidance from industry professionals.",
-    },
-    {
-        id: 3,
-        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920",
-        tag: "Achieve Excellence",
-        title: "Transform Your Future With MediQueue",
-        description:
-            "Join thousands of students achieving their academic and professional goals through our next-generation online learning platform.",
-    },
-    {
-        id: 4,
-        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1920",
-        tag: "Smart Scheduling",
-        title: "Skip The Waiting Queue With MediQueue",
-        description:
-            "Book your preferred academic tutors instantly, secure your digital session tokens, and track your live class schedule without any manual hassle.",
-    },
-    {
-        id: 5,
-        image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1920",
-        tag: "Expert Mentorship",
-        title: "Connect With Certified Subject Specialists",
-        description:
-            "From Mathematics and Physics to complex coding languages—find and consult with verified top-tier educators tailored to your exam prep.",
-    }
-];
+        {
+            id: 1,
+            image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1920",
+            tag: "Empower Your Mind",
+            title: "Learn From The Best Tutors Worldwide",
+            description: "Connect with expert mentors and accelerate your learning journey with personalized 1-on-1 sessions designed just for your success.",
+        },
+        {
+            id: 2,
+            image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1920",
+            tag: "Flexible Learning",
+            title: "Master New Skills At Your Own Pace",
+            description: "Explore interactive live courses, comprehensive study resources, and get real-time guidance from industry professionals.",
+        },
+        {
+            id: 3,
+            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920",
+            tag: "Achieve Excellence",
+            title: "Transform Your Future With MediQueue",
+            description: "Join thousands of students achieving their academic and professional goals through our next-generation online learning platform.",
+        },
+        {
+            id: 4,
+            image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1920",
+            tag: "Smart Scheduling",
+            title: "Skip The Waiting Queue With MediQueue",
+            description: "Book your preferred academic tutors instantly, secure your digital session tokens, and track your live class schedule without any manual hassle.",
+        },
+        {
+            id: 5,
+            image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1920",
+            tag: "Expert Mentorship",
+            title: "Connect With Certified Subject Specialists",
+            description: "From Mathematics and Physics to complex coding languages—find and consult with verified top-tier educators tailored to your exam prep.",
+        }
+    ];
+
+    const premiumMaskReveal = {
+        hidden: { opacity: 0, y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" },
+        visible: { 
+            opacity: 1, 
+            y: 0, 
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+            transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } 
+        }
+    };
+
+    const premiumTextReveal = {
+        hidden: { opacity: 0, x: -30, filter: "blur(4px)" },
+        visible: { 
+            opacity: 1, 
+            x: 0, 
+            filter: "blur(0px)",
+            transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } 
+        }
+    };
 
     return (
         <div className="container mx-auto relative w-full h-[400px] sm:h-[500px] md:h-[500px] lg:h-[650px] overflow-hidden bg-slate-950 rounded-lg">
@@ -65,58 +84,92 @@ const Hero = () => {
                 observer={true}
                 observeParents={true}
                 resizeObserver={true}
+                onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
                 autoplay={{
-                    delay: 4000,
+                    delay: 5000,
                     disableOnInteraction: false,
                 }}
                 pagination={{
                     clickable: true,
-                    bulletClass:
-                        "swiper-pagination-bullet !bg-white/40 !w-2 sm:!w-2.5 !h-2 sm:!h-2.5 !opacity-100 transition-all duration-300",
-                    bulletActiveClass:
-                        "swiper-pagination-bullet-active !w-6 sm:!w-8 !bg-teal-400 !rounded-full",
+                    bulletClass: "swiper-pagination-bullet !bg-white/40 !w-2 sm:!w-2.5 !h-2 sm:!h-2.5 !opacity-100 transition-all duration-300",
+                    bulletActiveClass: "swiper-pagination-bullet-active !w-6 sm:!w-8 !bg-teal-400 !rounded-full",
                 }}
                 className="w-full h-full"
             >
                 {slides.map((slide, index) => (
                     <SwiperSlide
                         key={slide.id}
-                        className="relative w-full h-[50vh] md:h-full flex items-center"
+                        className="relative w-full h-full flex items-center"
                     >
-                        <div className="absolute inset-0 w-full h-full">
-                            <Image
-                                src={slide.image}
-                                alt={slide.title}
-                                fill
-                                priority={index === 0}
-                                sizes="100vw"
-                                className="object-cover object-center scale-105 animate-[subtle-zoom_20s_infinite_alternate]"
-                            />
+                        <div className="absolute inset-0 w-full h-full overflow-hidden">
+                            <motion.div
+                                initial={{ scale: 1.12, filter: "blur(8px)" }}
+                                animate={activeIndex === index ? { scale: 1, filter: "blur(0px)" } : { scale: 1.12, filter: "blur(8px)" }}
+                                transition={{ duration: 1.4, ease: [0.25, 1, 0.5, 1] }}
+                                className="w-full h-full relative"
+                            >
+                                <Image
+                                    src={slide.image}
+                                    alt={slide.title}
+                                    fill
+                                    priority={index === 0}
+                                    sizes="100vw"
+                                    className="object-cover object-center"
+                                />
+                            </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/40 md:to-transparent" />
                         </div>
 
                         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full z-20 flex items-center h-full">
-                            <div className="max-w-3xl space-y-4 sm:space-y-6 text-left pt-12 sm:pt-0">
-                                <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 backdrop-blur-md">
-                                    {slide.tag}
-                                </span>
+                            <AnimatePresence mode="wait">
+                                {activeIndex === index && (
+                                    <motion.div 
+                                        initial="hidden"
+                                        animate="visible"
+                                        className="max-w-3xl space-y-4 sm:space-y-6 text-left pt-12 sm:pt-0"
+                                    >
+                                        <div className="overflow-hidden p-0.5">
+                                            <motion.span 
+                                                variants={premiumMaskReveal}
+                                                className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 backdrop-blur-md"
+                                            >
+                                                {slide.tag}
+                                            </motion.span>
+                                        </div>
 
-                                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight drop-shadow-sm">
-                                    {slide.title}
-                                </h1>
+                                        <div className="overflow-hidden p-0.5">
+                                            <motion.h1 
+                                                variants={premiumMaskReveal}
+                                                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight drop-shadow-sm"
+                                            >
+                                                {slide.title}
+                                            </motion.h1>
+                                        </div>
 
-                                <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
-                                    {slide.description}
-                                </p>
+                                        <div className="overflow-hidden p-0.5">
+                                            <motion.p 
+                                                variants={premiumTextReveal}
+                                                className="text-gray-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed"
+                                            >
+                                                {slide.description}
+                                            </motion.p>
+                                        </div>
 
-                                <div className="pt-2 sm:pt-4">
-                                    <Link href={"/tutors"}>
-                                        <Button className="w-full h-auto w-auto sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white text-sm sm:text-base font-medium rounded-lg shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 ">
-                                            Find Best Tutors
-                                        </Button>
-                                    </Link>
-                                </div>
-                            </div>
+                                        <motion.div 
+                                            initial={{ opacity: 0, scale: 0.92, y: 15 }}
+                                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                                            transition={{ delay: 0.35, duration: 0.55, ease: "easeOut" }}
+                                            className="pt-2 sm:pt-4"
+                                        >
+                                            <Link href={"/tutors"}>
+                                                <Button className="w-full h-auto w-auto sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white text-sm sm:text-base font-medium rounded-lg shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                                                    Find Best Tutors
+                                                </Button>
+                                            </Link>
+                                        </motion.div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </SwiperSlide>
                 ))}

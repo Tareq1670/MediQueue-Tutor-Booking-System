@@ -33,10 +33,7 @@ const TrustAndPartners = () => {
                     
                     <div className="lg:col-span-6 space-y-8 text-center lg:text-left">
                         <div className="space-y-4">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-200/60 dark:bg-zinc-800/60 border border-zinc-300/50 dark:border-zinc-700/50 text-xs font-semibold text-zinc-700 dark:text-zinc-300 backdrop-blur-sm">
-                                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                                Global Academic Network
-                            </div>
+                           
                             <h2 className="text-3xl md:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight max-w-xl mx-auto lg:mx-0 leading-[1.15]">
                                 The world's trusted platform for{" "}
                                 <span className="bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent">

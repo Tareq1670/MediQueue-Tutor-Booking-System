@@ -17,8 +17,8 @@ const HomeTutors = async () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    {tutors?.map((tutor) => (
-                        <TutorsCard key={tutor._id} tutor={tutor} />
+                    {tutors?.map((tutor, index) => (
+                        <TutorsCard key={tutor._id} tutor={tutor} index={index} />
                     ))}
                 </div>
             </div>

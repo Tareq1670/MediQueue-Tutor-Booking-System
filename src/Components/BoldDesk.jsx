@@ -66,9 +66,9 @@ const BoldDesk = () => {
     ];
 
     return (
-        <section className="container mx-auto w-full  py-16 md:py-24 transition-colors duration-300">
+        <section className="container mx-auto w-full py-16 md:py-24 transition-colors duration-300 overflow-hidden">
             <div className="container mx-auto px-4 md:px-6 max-w-7xl">
-                <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <div className="text-center max-w-3xl mx-auto mb-16 space-y-4 animate-[fadeIn_0.8s_cubic-bezier(0.16,1,0.3,1)_both]">
                     <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">
                         Why MediQueue?
                     </h2>
@@ -80,27 +80,38 @@ const BoldDesk = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    {features.map((feature) => (
+                    {features.map((feature, index) => (
                         <div
                             key={feature.id}
-                            className="bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/60 dark:border-zinc-800/40 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md hover:border-green-500/30 dark:hover:border-green-500/20 hover:bg-white dark:hover:bg-zinc-900/40 transition-all duration-300 flex flex-col justify-between items-start group relative overflow-hidden"
+                            style={{ animationDelay: `${index * 70}ms` }}
+                            className="bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/60 dark:border-zinc-800/40 rounded-2xl p-6 md:p-8 shadow-sm transition-all duration-500 ease-[0.16,1,0.3,1] flex flex-col justify-between items-start group relative overflow-hidden will-change-transform animate-[slideUp_0.7s_cubic-bezier(0.16,1,0.3,1)_both] hover:-translate-y-2 hover:scale-[1.015] hover:shadow-2xl hover:border-green-500/40 dark:hover:border-green-500/30 hover:bg-white dark:hover:bg-zinc-900/40"
                         >
                             <div className="space-y-4 relative z-10">
-                                <div className="w-10 h-10 rounded-xl bg-white dark:bg-zinc-900 flex items-center justify-center border border-zinc-200/60 dark:border-zinc-800/60 shadow-sm group-hover:scale-105 group-hover:border-green-500/20 transition-all duration-300">
+                                <div className="w-10 h-10 rounded-xl bg-white dark:bg-zinc-900 flex items-center justify-center border border-zinc-200/60 dark:border-zinc-800/60 shadow-sm transition-all duration-500 ease-[0.16,1,0.3,1] group-hover:scale-110 group-hover:border-green-500/30 dark:group-hover:border-green-500/20">
                                     {feature.icon}
                                 </div>
-                                <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200 tracking-tight transition-colors group-hover:text-green-600 dark:group-hover:text-green-400">
+                                <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200 tracking-tight transition-colors duration-300 group-hover:text-green-600 dark:group-hover:text-green-400">
                                     {feature.title}
                                 </h3>
                                 <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed font-normal">
                                     {feature.description}
                                 </p>
                             </div>
-                            <div className="absolute top-0 right-0 -translate-y-6 translate-x-6 w-24 h-24 bg-green-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                            <div className="absolute top-0 right-0 -translate-y-6 translate-x-6 w-32 h-32 bg-green-500/10 rounded-full blur-3xl opacity-0 transition-opacity duration-700 pointer-events-none group-hover:opacity-100" />
                         </div>
                     ))}
                 </div>
             </div>
+            <style dangerouslySetInnerHTML={{__html: `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(15px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes slideUp {
+                    from { opacity: 0; transform: translateY(30px); filter: blur(4px); }
+                    to { opacity: 1; transform: translateY(0); filter: blur(0px); }
+                }
+            `}} />
         </section>
     );
 };
