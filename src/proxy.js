@@ -11,9 +11,9 @@ export async function proxy(request) {
     const searchParams = request.nextUrl.searchParams;
     const redirectPath = searchParams.get("redirect") || "/";
 
-    if (!session) {
+    if (!session && currentPath !== "/login") {
         return NextResponse.redirect(
-            new URL(`/login?redirect=${currentPath}`, request.url),
+            new URL(`/login?redirect=${encodeURIComponent(currentPath)}`, request.url)
         );
     }
 
@@ -26,6 +26,7 @@ export async function proxy(request) {
 
 export const config = {
     matcher: [
+        "/login",
         "/tutors/:id",
         "/add-tutors",
         "/my-tutors",

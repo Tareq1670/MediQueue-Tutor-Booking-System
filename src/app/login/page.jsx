@@ -58,10 +58,9 @@ const LoginPage = () => {
                     "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
             });
 
-            startTransition(() => {
-                router.replace(redirect);
-                router.refresh();
-            });
+            setTimeout(() => {
+                window.location.href = redirect;
+            }, 500);
         }
     };
 
