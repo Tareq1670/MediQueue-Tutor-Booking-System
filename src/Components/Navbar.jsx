@@ -81,21 +81,14 @@ const Navbar = () => {
                 </Link>
 
                 <ul className="hidden lg:flex items-center space-x-6 font-medium">
-                    <li>
-                        <Link href="/" className={getLinkClass("/")}>
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            href="/tutors"
-                            className={getLinkClass("/tutors")}
-                        >
-                            Tutors
-                        </Link>
-                    </li>
                     {isPending ? (
                         <>
+                            <li>
+                                <Skeleton className="w-20 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+                            </li>
+                            <li>
+                                <Skeleton className="w-20 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+                            </li>
                             <li>
                                 <Skeleton className="w-20 h-5 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
                             </li>
@@ -107,36 +100,47 @@ const Navbar = () => {
                             </li>
                         </>
                     ) : (
-                        user && (
-                            <>
-                                <li>
-                                    <Link
-                                        href="/add-tutors"
-                                        className={getLinkClass("/add-tutors")}
-                                    >
-                                        Add Tutor
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/my-tutors"
-                                        className={getLinkClass("/my-tutors")}
-                                    >
-                                        My Tutors
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/my-booked-sessions"
-                                        className={getLinkClass(
-                                            "/my-booked-sessions",
-                                        )}
-                                    >
-                                        My Booked Sessions
-                                    </Link>
-                                </li>
-                            </>
-                        )
+                        <>
+                            <li>
+                                <Link href="/" className={getLinkClass("/")}>
+                                    Home
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/tutors"
+                                    className={getLinkClass("/tutors")}
+                                >
+                                    Tutors
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/add-tutors"
+                                    className={getLinkClass("/add-tutors")}
+                                >
+                                    Add Tutor
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/my-tutors"
+                                    className={getLinkClass("/my-tutors")}
+                                >
+                                    My Tutors
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/my-booked-sessions"
+                                    className={getLinkClass(
+                                        "/my-booked-sessions",
+                                    )}
+                                >
+                                    My Booked Sessions
+                                </Link>
+                            </li>
+                        </>
                     )}
                 </ul>
 
