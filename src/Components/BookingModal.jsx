@@ -37,7 +37,7 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
         }
 
         if (isExist) {
-            setExit("You have already booked this session!");
+            setExit("This session is fully booked. You can’t join at the moment.");
         } else {
             setExit("");
         }

@@ -4,12 +4,12 @@ import HomeTutors from "@/Components/HomeTutors";
 import TrustAndPartners from "@/Components/TrustAndPartners";
 
 export default function Home() {
-  return (
-    <div className="my-5">
-      <Hero/>
-      <HomeTutors/>
-      <BoldDesk/>
-      <TrustAndPartners/>
-    </div>
-  );
+    return (
+        <div className="my-5">
+            <Hero />
+            <HomeTutors />
+            <BoldDesk />
+            <TrustAndPartners />
+        </div>
+    );
 }

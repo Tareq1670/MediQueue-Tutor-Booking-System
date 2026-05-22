@@ -1,7 +1,7 @@
 import { Button, Table } from "@heroui/react";
 import Action from "./Action";
 import BookedAction from "./BookedAction";
-import { CalendarX } from "lucide-react"; 
+import { CalendarX } from "lucide-react";
 import Link from "next/link";
 
 const MyBookedTable = ({ allBook = [] }) => {
@@ -99,12 +99,14 @@ const MyBookedTable = ({ allBook = [] }) => {
                         No Tutors Booked Yet
                     </h3>
                     <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-sm mb-6 leading-relaxed">
-                        It looks like you haven't scheduled any tutoring sessions yet. Explore our expert tutors to get started!
+                        It looks like you haven't scheduled any tutoring
+                        sessions yet. Explore our expert tutors to get started!
                     </p>
                     <Link href={"/tutors"}>
-                    <Button className="px-5 h-auto py-2.5 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 font-medium text-sm rounded-lg transition-all duration-200 shadow-sm active:scale-[0.98]">
-                        Find a Tutor
-                    </Button></Link>
+                        <Button className="px-5 h-auto py-2.5 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 font-medium text-sm rounded-lg transition-all duration-200 shadow-sm active:scale-[0.98]">
+                            Find a Tutor
+                        </Button>
+                    </Link>
                 </div>
             )}
         </section>

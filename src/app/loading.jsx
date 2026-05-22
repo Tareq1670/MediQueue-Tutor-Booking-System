@@ -2,7 +2,7 @@ import { Skeleton } from "@heroui/react";
 
 export default function Loading() {
     return (
-        <div className="container mx-auto min-h-screen bg-zinc-950 text-white">
+        <div className="container mx-auto min-h-screen text-white">
             <section className="relative  w-full h-[400px] sm:h-[500px] md:h-[500px] lg:h-[650px] flex items-center justify-start overflow-hidden px-4 sm:px-6 md:px-12 lg:px-24 py-20 md:py-32">
                 <div className="absolute inset-0 z-0 bg-zinc-900/40" />
                 
