@@ -15,7 +15,6 @@ const TutorsPage = () => {
     const [endDate, setEndDate] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    console.log(tutors);
 
     useEffect(() => {
         const fetchTutors = async () => {
@@ -33,7 +32,7 @@ const TutorsPage = () => {
                 );
                 setTutors(data || []);
             } catch (error) {
-                console.error("Error fetching tutors:", error);
+                // console.error("Error fetching tutors:", error);
             } finally {
                 setLoading(false);
             }
@@ -74,7 +73,7 @@ const TutorsPage = () => {
                         </div>
                     </div>
 
-                    <div className="w-full md:w-auto flex flex-col sm:flex-row gap-4 md:flex-1 relative z-40">
+                    <div className="w-full md:w-auto flex flex-row gap-4 md:flex-1 relative z-40">
                         <div className="w-full flex flex-col gap-2 relative">
                             <label className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                                 Start Date

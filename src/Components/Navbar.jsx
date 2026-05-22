@@ -8,6 +8,16 @@ import Hamburger from "hamburger-react";
 import { Moon, Sun } from "@gravity-ui/icons";
 import { useTheme } from "next-themes";
 import { authClient } from "@/lib/auth-client";
+import {
+    RiLogoutCircleLine,
+    RiLogoutCircleRLine,
+    RiUserAddLine,
+    RiUserLine,
+    RiDashboardLine,
+    RiFileList3Line,
+    RiUserSettingsLine,
+} from "react-icons/ri";
+import { MdOutlineHome, MdOutlineHowToReg } from "react-icons/md";
 
 const Navbar = () => {
     const router = useRouter();
@@ -55,14 +65,15 @@ const Navbar = () => {
 
     const getLinkClass = (path, isMobile = false) => {
         const isActive = pathname === path;
+        const baseClass = "flex items-center justify-center gap-2 transition";
         if (isMobile) {
             return isActive
-                ? "text-green-600 dark:text-green-400 font-semibold text-lg"
-                : "text-zinc-700 dark:text-zinc-300 hover:text-green-600 dark:hover:text-green-400 transition";
+                ? `${baseClass} text-green-600 dark:text-green-400 font-semibold text-lg`
+                : `${baseClass} text-zinc-700 dark:text-zinc-300 hover:text-green-600 dark:hover:text-green-400`;
         }
         return isActive
-            ? "text-green-600 dark:text-green-400 font-semibold"
-            : "text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-400 transition";
+            ? `${baseClass} text-green-600 dark:text-green-400 font-semibold`
+            : `${baseClass} text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-400`;
     };
 
     const currentTheme = theme === "system" ? resolvedTheme : theme;
@@ -207,13 +218,13 @@ const Navbar = () => {
                                 </Avatar>
                             </div>
                             {isProfileOpen && (
-                                <div className="absolute right-0 mt-3 w-48 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/50 rounded-2xl shadow-xl py-2 animate-in fade-in slide-in-from-top-2 duration-200 overflow-hidden text-center">
+                                <div className="absolute right-0 mt-3 w-48 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/50 rounded-2xl shadow-xl py-2 overflow-hidden text-center">
                                     <Link
                                         href="/profile"
-                                        className="block px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition text-left"
+                                        className=" px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition text-left flex not-last:items-center gap-2 font-medium "
                                         onClick={() => setIsProfileOpen(false)}
                                     >
-                                        Profile Page
+                                      <RiUserSettingsLine />  Profile
                                     </Link>
                                     <hr className="border-zinc-200 dark:border-zinc-800/10 my-1" />
                                     <Button
@@ -221,7 +232,9 @@ const Navbar = () => {
                                         onClick={handleLogout}
                                         className="w-full block px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition text-left font-medium"
                                     >
-                                        Logout
+                                       <span className="flex items-center gap-2">
+                                        <RiLogoutCircleLine /> Logout
+                                        </span>
                                     </Button>
                                 </div>
                             )}
@@ -287,7 +300,7 @@ const Navbar = () => {
                             className={getLinkClass("/", true)}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Home
+                            <MdOutlineHome /> Home
                         </Link>
                     </li>
                     <li>
@@ -296,7 +309,7 @@ const Navbar = () => {
                             className={getLinkClass("/tutors", true)}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Tutors
+                            <RiUserLine /> Tutors
                         </Link>
                     </li>
                     {user && (
@@ -310,7 +323,7 @@ const Navbar = () => {
                                     )}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
-                                    Add Tutor
+                                    <RiUserAddLine /> Add Tutor
                                 </Link>
                             </li>
                             <li>
@@ -319,7 +332,7 @@ const Navbar = () => {
                                     className={getLinkClass("/my-tutors", true)}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
-                                    My Tutors
+                                    <RiDashboardLine /> My Tutors
                                 </Link>
                             </li>
                             <li>
@@ -331,7 +344,7 @@ const Navbar = () => {
                                     )}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
-                                    My Booked Sessions
+                                    <RiFileList3Line /> Booked Sessions
                                 </Link>
                             </li>
                             <li>
@@ -340,7 +353,7 @@ const Navbar = () => {
                                     className={getLinkClass("/profile", true)}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
-                                    Profile
+                                    <RiUserSettingsLine /> Profile
                                 </Link>
                             </li>
                         </>
@@ -355,7 +368,7 @@ const Navbar = () => {
                             onClick={() => setIsMenuOpen(false)}
                         >
                             <Button className="w-full rounded-xl bg-green-600 text-white font-medium py-2.5">
-                                Login
+                                <RiLogoutCircleRLine /> Login
                             </Button>
                         </Link>
                         <Link
@@ -363,7 +376,7 @@ const Navbar = () => {
                             onClick={() => setIsMenuOpen(false)}
                         >
                             <Button className="w-full rounded-xl bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400 font-medium py-2.5">
-                                Register
+                                <MdOutlineHowToReg /> Register
                             </Button>
                         </Link>
                     </div>
@@ -372,7 +385,7 @@ const Navbar = () => {
                         onClick={handleLogout}
                         className="w-full font-semibold bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-950/40 rounded-xl py-2.5 text-red-600 dark:text-red-400 transition"
                     >
-                        Logout
+                        <RiLogoutCircleLine /> Logout
                     </Button>
                 )}
             </div>

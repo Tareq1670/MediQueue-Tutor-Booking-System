@@ -1,65 +1,108 @@
 import Link from "next/link";
 import { Button } from "@heroui/react";
-import { FaXTwitter } from "react-icons/fa6";
-import { FiFacebook, FiLinkedin } from "react-icons/fi";
+import { FaXTwitter, FaFacebookF, FaLinkedinIn } from "react-icons/fa6";
 
 const Footer = () => {
-    return (
-        <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md transition-colors duration-300 w-full mt-5">
-            <div className="container mx-auto px-2 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    const currentYear = new Date().getFullYear();
 
-                    <div className="flex flex-col space-y-3">
-                        <span className="uppercase font-bold text-xl text-green-600 dark:text-green-500 tracking-wider">
+    return (
+        <footer className="relative border-t border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-xl mt-12">
+            <div className="container mx-auto px-6 py-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                    <div className="flex flex-col space-y-4">
+                        <Link
+                            href="/"
+                            className="text-2xl font-bold bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+                        >
                             MediQueue
-                        </span>
-                        <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-xs leading-relaxed">
-                            Connecting learners with expert tutors seamlessly across any subject. Streamline your academic schedule.
+                        </Link>
+                        <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed max-w-xs">
+                            Empowering your learning journey by connecting
+                            students with expert tutors globally. Quality
+                            education, just a click away.
                         </p>
                     </div>
 
-                    <div className="flex flex-col space-y-3">
-                        <h4 className="text-zinc-800 dark:text-zinc-200 font-semibold text-base">Tutor Services</h4>
-                        <ul className="flex flex-col space-y-2 text-sm text-zinc-500 dark:text-zinc-400">
-                            <Link href={"/tutors"}><li>Find Tutors</li></Link>
-                            <Link href={"/add-tutors"}><li>Become a Tutor</li></Link>
-                            <Link href={"/my-booked-sessions"}><li>Booked Sessions</li></Link>
+                    <div className="flex flex-col space-y-4">
+                        <h4 className="font-semibold text-zinc-900 dark:text-white uppercase tracking-wider text-sm">
+                            Services
+                        </h4>
+                        <ul className="flex flex-col space-y-3 text-sm text-zinc-500 dark:text-zinc-400">
+                            <li>
+                                <Link
+                                    href="/tutors"
+                                    className="hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                                >
+                                    Find a Tutor
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/add-tutors"
+                                    className="hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                                >
+                                    Become a Tutor
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/my-booked-sessions"
+                                    className="hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                                >
+                                    Booked Sessions
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 
                     <div className="flex flex-col space-y-4">
-                        <div className="flex flex-col space-y-1">
-                            <h4 className="text-zinc-800 dark:text-zinc-200 font-semibold text-base">Contact Us</h4>
-                            <p className="text-zinc-500 dark:text-zinc-400 text-sm">support@mediqueue.com</p>
-                            <p className="text-zinc-500 dark:text-zinc-400 text-sm">+1 (555) 019-2834</p>
+                        <h4 className="font-semibold text-zinc-900 dark:text-white uppercase tracking-wider text-sm">
+                            Contact
+                        </h4>
+                        <div className="text-sm text-zinc-500 dark:text-zinc-400 space-y-2">
+                            <p>support@mediqueue.com</p>
+                            <p>Mymensingh, Bangladesh</p>
                         </div>
-                        <div className="flex items-center space-x-3">
-                            <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                                <Button isIconOnly size="sm" variant="flat" className="bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg hover:text-green-600 dark:hover:text-green-400 transition">
-                                    <FiFacebook />
+                    </div>
+
+                    <div className="flex flex-col space-y-4">
+                        <h4 className="font-semibold text-zinc-900 dark:text-white uppercase tracking-wider text-sm">
+                            Follow Us
+                        </h4>
+                        <div className="flex items-center gap-3">
+                            {[
+                                { icon: FaFacebookF, href: "#" },
+                                { icon: FaXTwitter, href: "#" },
+                                { icon: FaLinkedinIn, href: "#" },
+                            ].map((social, idx) => (
+                                <Button
+                                    key={idx}
+                                    isIconOnly
+                                    variant="flat"
+                                    className="rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-green-100 hover:text-green-600 dark:hover:bg-green-900/30 dark:hover:text-green-400 transition-all"
+                                >
+                                    <social.icon size={16} />
                                 </Button>
-                            </Link>
-                            <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                                <Button isIconOnly size="sm" variant="flat" className="bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg hover:text-green-600 dark:hover:text-green-400 transition">
-                                    <FaXTwitter />
-                                </Button>
-                            </Link>
-                            <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                                <Button isIconOnly size="sm" variant="flat" className="bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg hover:text-green-600 dark:hover:text-green-400 transition">
-                                    <FiLinkedin />
-                                </Button>
-                            </Link>
+                            ))}
                         </div>
                     </div>
                 </div>
 
-                <div className="border-t border-zinc-200 dark:border-zinc-800/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <p className="text-zinc-400 dark:text-zinc-500 text-xs text-center sm:text-left">
-                        &copy; {new Date().getFullYear()} MediQueue. All rights reserved.
-                    </p>
-                    <div className="flex space-x-4 text-xs text-zinc-400 dark:text-zinc-500">
-                        <span>Privacy Policy</span>
-                        <span>Terms of Service</span>
+                <div className="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row items-center justify-between space-y-2 text-sm text-zinc-400">
+                    <p>© {currentYear} MediQueue. All rights reserved.</p>
+                    <div className="flex items-center gap-8">
+                        <Link
+                            href="/privacy"
+                            className="hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors"
+                        >
+                            Privacy Policy
+                        </Link>
+                        <Link
+                            href="/terms"
+                            className="hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors"
+                        >
+                            Terms of Service
+                        </Link>
                     </div>
                 </div>
             </div>

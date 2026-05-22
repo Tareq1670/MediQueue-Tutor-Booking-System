@@ -44,7 +44,6 @@ const Action = ({ tutor }) => {
                 toast.error("Failed to delete tutor or tutor not found.");
             }
         } catch (error) {
-            console.error("Error deleting tutor:", error);
             toast.error("Something went wrong. Please try again.");
         }
     };

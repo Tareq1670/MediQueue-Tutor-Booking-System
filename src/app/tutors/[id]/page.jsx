@@ -55,13 +55,12 @@ const DetailsPage = async ({ params }) => {
     const { token } = await auth.api.getToken({
         headers: await headers(),
     });
-    const tutor = await getTutorsDetail(id,token);
+    const tutor = await getTutorsDetail(id, token);
     const session = await auth.api.getSession({
         headers: await headers(),
     });
     const allBooking = await getAllBooking(token);
     const bookUser = await getAllBooking();
-
 
     const user = session?.user;
     const {

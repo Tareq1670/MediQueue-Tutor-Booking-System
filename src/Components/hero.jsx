@@ -162,7 +162,7 @@ const Hero = () => {
                                             className="pt-2 sm:pt-4"
                                         >
                                             <Link href={"/tutors"}>
-                                                <Button className="w-full h-auto w-auto sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white text-sm sm:text-base font-medium rounded-lg shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                                                <Button className="w-full h-auto w-auto sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-600 text-white text-sm sm:text-base font-medium rounded-lg shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
                                                     Find Best Tutors
                                                 </Button>
                                             </Link>

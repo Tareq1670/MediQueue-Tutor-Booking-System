@@ -145,7 +145,7 @@ const AddTutorPage = () => {
                                 required
                                 name="category"
                                 defaultValue=""
-                                className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-200 cursor-pointer app-none"
+                                className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200 cursor-pointer app-none"
                             >
                                 <option
                                     value=""
@@ -236,7 +236,7 @@ const AddTutorPage = () => {
                                 required
                                 name="teachingMode"
                                 defaultValue="Online"
-                                className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-200 cursor-pointer"
+                                className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200 cursor-pointer"
                             >
                                 <option
                                     value="Online"
@@ -338,7 +338,7 @@ const AddTutorPage = () => {
                                 selected={selectedDate}
                                 onChange={(date) => setSelectedDate(date)}
                                 dateFormat="yyyy-MM-dd"
-                                className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-200 cursor-pointer"
+                                className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200 cursor-pointer"
                                 popperClassName="custom-react-datepicker-popper"
                             />
                         </div>
@@ -381,7 +381,7 @@ const AddTutorPage = () => {
                     <Button
                         type="submit"
                         isLoading={isLoading}
-                        className="w-full h-12 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-emerald-600/20 dark:shadow-none transition-all duration-200 mt-4"
+                        className="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-green-600/20 dark:shadow-none transition-all duration-200 mt-4"
                     >
                         {isLoading ? "Adding Tutor..." : "Add Tutor"}
                     </Button>
