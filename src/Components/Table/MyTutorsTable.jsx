@@ -10,7 +10,7 @@ const MyTutorsTable = ({ myTutors }) => {
     const isEmpty = !myTutors || myTutors.length === 0;
 
     return (
-        <section className="container mx-auto w-full py-12 md:py-16 px-4 md:px-6 max-w-7xl transition-colors duration-300">
+        <section className="container  min-h-[90vh] mx-auto w-full py-12 md:py-16 px-2 sm:px-4 md:px-6 max-w-7xl transition-colors duration-300">
             <div className="mb-8 space-y-2">
                 <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-white tracking-tight">
                     My Managed Tutors
@@ -87,7 +87,7 @@ const MyTutorsTable = ({ myTutors }) => {
                     </Link>
                 </div>
             ) : (
-                <div className="bg-zinc-50/30 dark:bg-zinc-900/10 border border-zinc-200/60 dark:border-zinc-800/40 rounded-2xl shadow-sm overflow-hidden p-1 backdrop-blur-md">
+                <div className="bg-zinc-50/30 dark:bg-zinc-900/10 border border-zinc-200/60 dark:border-zinc-800/40 rounded-2xl shadow-sm overflow-hidden p-0 md:p-1 backdrop-blur-md">
                     <Table
                         aria-label="Tutors management table"
                         className="w-full"

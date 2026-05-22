@@ -21,56 +21,65 @@ const Hero = () => {
             image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1920",
             tag: "Empower Your Mind",
             title: "Learn From The Best Tutors Worldwide",
-            description: "Connect with expert mentors and accelerate your learning journey with personalized 1-on-1 sessions designed just for your success.",
+            description:
+                "Connect with expert mentors and accelerate your learning journey with personalized 1-on-1 sessions designed just for your success.",
         },
         {
             id: 2,
             image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1920",
             tag: "Flexible Learning",
             title: "Master New Skills At Your Own Pace",
-            description: "Explore interactive live courses, comprehensive study resources, and get real-time guidance from industry professionals.",
+            description:
+                "Explore interactive live courses, comprehensive study resources, and get real-time guidance from industry professionals.",
         },
         {
             id: 3,
             image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920",
             tag: "Achieve Excellence",
             title: "Transform Your Future With MediQueue",
-            description: "Join thousands of students achieving their academic and professional goals through our next-generation online learning platform.",
+            description:
+                "Join thousands of students achieving their academic and professional goals through our next-generation online learning platform.",
         },
         {
             id: 4,
             image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1920",
             tag: "Smart Scheduling",
             title: "Skip The Waiting Queue With MediQueue",
-            description: "Book your preferred academic tutors instantly, secure your digital session tokens, and track your live class schedule without any manual hassle.",
+            description:
+                "Book your preferred academic tutors instantly, secure your digital session tokens, and track your live class schedule without any manual hassle.",
         },
         {
             id: 5,
             image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1920",
             tag: "Expert Mentorship",
             title: "Connect With Certified Subject Specialists",
-            description: "From Mathematics and Physics to complex coding languages—find and consult with verified top-tier educators tailored to your exam prep.",
-        }
+            description:
+                "From Mathematics and Physics to complex coding languages—find and consult with verified top-tier educators tailored to your exam prep.",
+        },
     ];
 
     const premiumMaskReveal = {
-        hidden: { opacity: 0, y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" },
-        visible: { 
-            opacity: 1, 
-            y: 0, 
+        hidden: {
+            opacity: 0,
+            y: "100%",
+            clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
+        },
+        visible: {
+            opacity: 1,
+            y: 0,
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-            transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } 
-        }
+            transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] },
+        },
     };
 
     const premiumTextReveal = {
         hidden: { opacity: 0, x: -30, filter: "blur(4px)" },
-        visible: { 
-            opacity: 1, 
-            x: 0, 
+        visible: {
+            opacity: 1,
+            x: 0,
             filter: "blur(0px)",
-            transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } 
-        }
+            transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+        },
     };
 
     return (
@@ -91,8 +100,10 @@ const Hero = () => {
                 }}
                 pagination={{
                     clickable: true,
-                    bulletClass: "swiper-pagination-bullet !bg-white/40 !w-2 sm:!w-2.5 !h-2 sm:!h-2.5 !opacity-100 transition-all duration-300",
-                    bulletActiveClass: "swiper-pagination-bullet-active !w-6 sm:!w-8 !bg-teal-400 !rounded-full",
+                    bulletClass:
+                        "swiper-pagination-bullet !bg-white/40 !w-2 sm:!w-2.5 !h-2 sm:!h-2.5 !opacity-100 transition-all duration-300",
+                    bulletActiveClass:
+                        "swiper-pagination-bullet-active !w-6 sm:!w-8 !bg-teal-400 !rounded-full",
                 }}
                 className="w-full h-full"
             >
@@ -104,8 +115,15 @@ const Hero = () => {
                         <div className="absolute inset-0 w-full h-full overflow-hidden">
                             <motion.div
                                 initial={{ scale: 1.12, filter: "blur(8px)" }}
-                                animate={activeIndex === index ? { scale: 1, filter: "blur(0px)" } : { scale: 1.12, filter: "blur(8px)" }}
-                                transition={{ duration: 1.4, ease: [0.25, 1, 0.5, 1] }}
+                                animate={
+                                    activeIndex === index
+                                        ? { scale: 1, filter: "blur(0px)" }
+                                        : { scale: 1.12, filter: "blur(8px)" }
+                                }
+                                transition={{
+                                    duration: 1.4,
+                                    ease: [0.25, 1, 0.5, 1],
+                                }}
                                 className="w-full h-full relative"
                             >
                                 <Image
@@ -123,22 +141,22 @@ const Hero = () => {
                         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full z-20 flex items-center h-full">
                             <AnimatePresence mode="wait">
                                 {activeIndex === index && (
-                                    <motion.div 
+                                    <motion.div
                                         initial="hidden"
                                         animate="visible"
                                         className="max-w-3xl space-y-4 sm:space-y-6 text-left pt-12 sm:pt-0"
                                     >
                                         <div className="overflow-hidden p-0.5">
-                                            <motion.span 
+                                            <motion.span
                                                 variants={premiumMaskReveal}
-                                                className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 backdrop-blur-md"
+                                                className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-green-400 bg-teal-500/10 border border-green-500/20 backdrop-blur-md"
                                             >
                                                 {slide.tag}
                                             </motion.span>
                                         </div>
 
                                         <div className="overflow-hidden p-0.5">
-                                            <motion.h1 
+                                            <motion.h1
                                                 variants={premiumMaskReveal}
                                                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight drop-shadow-sm"
                                             >
@@ -147,7 +165,7 @@ const Hero = () => {
                                         </div>
 
                                         <div className="overflow-hidden p-0.5">
-                                            <motion.p 
+                                            <motion.p
                                                 variants={premiumTextReveal}
                                                 className="text-gray-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed"
                                             >
@@ -155,10 +173,22 @@ const Hero = () => {
                                             </motion.p>
                                         </div>
 
-                                        <motion.div 
-                                            initial={{ opacity: 0, scale: 0.92, y: 15 }}
-                                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                                            transition={{ delay: 0.35, duration: 0.55, ease: "easeOut" }}
+                                        <motion.div
+                                            initial={{
+                                                opacity: 0,
+                                                scale: 0.92,
+                                                y: 15,
+                                            }}
+                                            animate={{
+                                                opacity: 1,
+                                                scale: 1,
+                                                y: 0,
+                                            }}
+                                            transition={{
+                                                delay: 0.35,
+                                                duration: 0.55,
+                                                ease: "easeOut",
+                                            }}
                                             className="pt-2 sm:pt-4"
                                         >
                                             <Link href={"/tutors"}>

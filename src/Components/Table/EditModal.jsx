@@ -19,7 +19,7 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [selectedDate, setSelectedDate] = useState(
-        tutor?.startDate ? new Date(tutor.startDate) : new Date()
+        tutor?.startDate ? new Date(tutor.startDate) : new Date(),
     );
 
     const handleSubmit = async (e) => {
@@ -45,7 +45,7 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(tutorData),
-                }
+                },
             );
             const data = await res.json();
             setLoading(false);
@@ -60,7 +60,8 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                         borderRadius: "12px",
                         border: "1px solid #e2e8f0",
                     },
-                    className: "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
+                    className:
+                        "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
                 });
                 router.refresh();
                 onClose();
@@ -78,13 +79,13 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
             <Modal.Backdrop>
                 <Modal.Container placement="auto">
                     <Modal.Dialog className="w-full max-w-2xl border border-zinc-200/80 dark:border-zinc-800/60 rounded-2xl shadow-xl backdrop-blur-md">
-                        
                         <Modal.Header>
                             <Modal.Heading className="text-2xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-200">
                                 Edit Tutor Details
                             </Modal.Heading>
                             <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                                Update the credentials and information for this tutor.
+                                Update the credentials and information for this
+                                tutor.
                             </p>
                         </Modal.Header>
 
@@ -95,9 +96,19 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                 </div>
                             )}
 
-                            <form id="edit-tutor-form" onSubmit={handleSubmit} className="flex flex-col gap-5">
+                            <form
+                                id="edit-tutor-form"
+                                onSubmit={handleSubmit}
+                                className="flex flex-col gap-5"
+                            >
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <TextField isRequired name="name" type="text" defaultValue={tutor?.name} className="w-full">
+                                    <TextField
+                                        isRequired
+                                        name="name"
+                                        type="text"
+                                        defaultValue={tutor?.name}
+                                        className="w-full"
+                                    >
                                         <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                             Tutor Name
                                         </Label>
@@ -108,13 +119,32 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                         <FieldError className="text-xs text-red-500 mt-1" />
                                     </TextField>
 
-                                    <TextField isRequired name="image" type="url" defaultValue={tutor?.image} className="w-full">
+                                    <TextField
+                                        isRequired
+                                        name="image"
+                                        type="url"
+                                        className="w-full"
+                                        validate={(value) => {
+                                            if (!value) return null;
+
+                                            try {
+                                                const url = new URL(value);
+                                                return url.protocol ===
+                                                    "http:" ||
+                                                    url.protocol === "https:"
+                                                    ? null
+                                                    : "Please enter a valid URL (http or https)";
+                                            } catch {
+                                                return "Please enter a valid URL";
+                                            }
+                                        }}
+                                    >
                                         <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                             Photo URL
                                         </Label>
                                         <Input
-                                            placeholder="Enter your imageUrl"
-                                            className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50"
+                                            placeholder="https://example.com/image-link"
+                                            className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 px-3 py-2"
                                         />
                                         <FieldError className="text-xs text-red-500 mt-1" />
                                     </TextField>
@@ -131,19 +161,84 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                             defaultValue={tutor?.category || ""}
                                             className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-200 cursor-pointer app-none"
                                         >
-                                            <option value="" className="dark:bg-zinc-900 text-zinc-400">Select Subject</option>
-                                            <option value="Anatomy" className="dark:bg-zinc-900">Anatomy</option>
-                                            <option value="Physiology" className="dark:bg-zinc-900">Physiology</option>
-                                            <option value="Biochemistry" className="dark:bg-zinc-900">Biochemistry</option>
-                                            <option value="Pathology" className="dark:bg-zinc-900">Pathology</option>
-                                            <option value="Pharmacology" className="dark:bg-zinc-900">Pharmacology</option>
-                                            <option value="Physics" className="dark:bg-zinc-900">Physics</option>
-                                            <option value="Chemistry" className="dark:bg-zinc-900">Chemistry</option>
-                                            <option value="Biology" className="dark:bg-zinc-900">Biology</option>
-                                            <option value="Mathematics" className="dark:bg-zinc-900">Mathematics</option>
-                                            <option value="Higher Mathematics" className="dark:bg-zinc-900">Higher Mathematics</option>
-                                            <option value="English" className="dark:bg-zinc-900">English</option>
-                                            <option value="ICT" className="dark:bg-zinc-900">ICT</option>
+                                            <option
+                                                value=""
+                                                className="dark:bg-zinc-900 text-zinc-400"
+                                            >
+                                                Select Subject
+                                            </option>
+                                            <option
+                                                value="Anatomy"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Anatomy
+                                            </option>
+                                            <option
+                                                value="Physiology"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Physiology
+                                            </option>
+                                            <option
+                                                value="Biochemistry"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Biochemistry
+                                            </option>
+                                            <option
+                                                value="Pathology"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Pathology
+                                            </option>
+                                            <option
+                                                value="Pharmacology"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Pharmacology
+                                            </option>
+                                            <option
+                                                value="Physics"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Physics
+                                            </option>
+                                            <option
+                                                value="Chemistry"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Chemistry
+                                            </option>
+                                            <option
+                                                value="Biology"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Biology
+                                            </option>
+                                            <option
+                                                value="Mathematics"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Mathematics
+                                            </option>
+                                            <option
+                                                value="Higher Mathematics"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Higher Mathematics
+                                            </option>
+                                            <option
+                                                value="English"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                English
+                                            </option>
+                                            <option
+                                                value="ICT"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                ICT
+                                            </option>
                                         </select>
                                     </div>
 
@@ -154,18 +249,41 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                         <select
                                             required
                                             name="teachingMode"
-                                            defaultValue={tutor?.teachingMode || "Online"}
+                                            defaultValue={
+                                                tutor?.teachingMode || "Online"
+                                            }
                                             className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-200 cursor-pointer"
                                         >
-                                            <option value="Online" className="dark:bg-zinc-900">Online</option>
-                                            <option value="Offline" className="dark:bg-zinc-900">Offline</option>
-                                            <option value="Both" className="dark:bg-zinc-900">Both</option>
+                                            <option
+                                                value="Online"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Online
+                                            </option>
+                                            <option
+                                                value="Offline"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Offline
+                                            </option>
+                                            <option
+                                                value="Both"
+                                                className="dark:bg-zinc-900"
+                                            >
+                                                Both
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <TextField isRequired name="availableDays" type="text" defaultValue={tutor?.availableDays} className="w-full">
+                                    <TextField
+                                        isRequired
+                                        name="availableDays"
+                                        type="text"
+                                        defaultValue={tutor?.availableDays}
+                                        className="w-full"
+                                    >
                                         <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                             Available Days
                                         </Label>
@@ -176,7 +294,13 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                         <FieldError className="text-xs text-red-500 mt-1" />
                                     </TextField>
 
-                                    <TextField isRequired name="availableTime" type="text" defaultValue={tutor?.availableTime} className="w-full">
+                                    <TextField
+                                        isRequired
+                                        name="availableTime"
+                                        type="text"
+                                        defaultValue={tutor?.availableTime}
+                                        className="w-full"
+                                    >
                                         <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                             Available Time Slot
                                         </Label>
@@ -189,7 +313,13 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                    <TextField isRequired name="hourlyFee" type="number" defaultValue={tutor?.hourlyFee} className="w-full">
+                                    <TextField
+                                        isRequired
+                                        name="hourlyFee"
+                                        type="number"
+                                        defaultValue={tutor?.hourlyFee}
+                                        className="w-full"
+                                    >
                                         <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                             Hourly Fee ($)
                                         </Label>
@@ -201,7 +331,13 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                         <FieldError className="text-xs text-red-500 mt-1" />
                                     </TextField>
 
-                                    <TextField isRequired name="totalSlot" type="number" defaultValue={tutor?.totalSlot} className="w-full">
+                                    <TextField
+                                        isRequired
+                                        name="totalSlot"
+                                        type="number"
+                                        defaultValue={tutor?.totalSlot}
+                                        className="w-full"
+                                    >
                                         <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                             Total Slots
                                         </Label>
@@ -220,7 +356,9 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                         <DatePicker
                                             required
                                             selected={selectedDate}
-                                            onChange={(date) => setSelectedDate(date)}
+                                            onChange={(date) =>
+                                                setSelectedDate(date)
+                                            }
                                             dateFormat="yyyy-MM-dd"
                                             className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-200 cursor-pointer"
                                             popperClassName="custom-react-datepicker-popper"
@@ -229,7 +367,13 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <TextField isRequired name="institution" type="text" defaultValue={tutor?.institution} className="w-full">
+                                    <TextField
+                                        isRequired
+                                        name="institution"
+                                        type="text"
+                                        defaultValue={tutor?.institution}
+                                        className="w-full"
+                                    >
                                         <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                             Institution & Experience
                                         </Label>
@@ -240,7 +384,13 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                         <FieldError className="text-xs text-red-500 mt-1" />
                                     </TextField>
 
-                                    <TextField isRequired name="location" type="text" defaultValue={tutor?.location} className="w-full">
+                                    <TextField
+                                        isRequired
+                                        name="location"
+                                        type="text"
+                                        defaultValue={tutor?.location}
+                                        className="w-full"
+                                    >
                                         <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                             Location (Area/City)
                                         </Label>
@@ -255,7 +405,11 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                         </Modal.Body>
 
                         <Modal.Footer className="flex justify-end gap-3 p-6 border-t border-zinc-100 dark:border-zinc-800/80">
-                            <Button variant="secondary" onClick={onClose} className="px-5 h-11 rounded-xl text-sm text-black dark:text-white font-medium">
+                            <Button
+                                variant="secondary"
+                                onClick={onClose}
+                                className="px-5 h-11 rounded-xl text-sm text-black dark:text-white font-medium"
+                            >
                                 Cancel
                             </Button>
                             <Button
@@ -264,7 +418,9 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                 isLoading={isLoading}
                                 className="px-6 h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-emerald-600/20 dark:shadow-none transition-all duration-200"
                             >
-                                {isLoading ? "Saving Changes..." : "Save Changes"}
+                                {isLoading
+                                    ? "Saving Changes..."
+                                    : "Save Changes"}
                             </Button>
                         </Modal.Footer>
                     </Modal.Dialog>

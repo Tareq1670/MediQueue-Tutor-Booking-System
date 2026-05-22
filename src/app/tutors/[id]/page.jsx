@@ -353,6 +353,19 @@ const DetailsPage = async ({ params }) => {
                                 </div>
                             </div>
 
+                            {tutor.totalSlot === 0 && (
+                                <div className="p-3 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-lg text-sm text-amber-700 dark:text-amber-300 mb-4">
+                                    <p>
+                                        This tutor is currently fully booked and
+                                        has no available slots at the moment.
+                                        Please check back later for new
+                                        availability or explore other tutors to
+                                        continue your learning journey without
+                                        delay.
+                                    </p>
+                                </div>
+                            )}
+
                             <BookingModal
                                 tutor={tutor}
                                 user={user}

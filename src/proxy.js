@@ -30,5 +30,6 @@ export const config = {
         "/add-tutors",
         "/my-tutors",
         "/my-booked-sessions",
+        "/profile",
     ],
 };

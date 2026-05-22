@@ -3,17 +3,15 @@ import { auth } from "@/lib/auth";
 import { getUserBook } from "@/lib/data";
 import { headers } from "next/headers";
 
-
-
-
 export const metadata = {
     title: "My Booked Sessions | MediQueue",
-    description: "View and manage your booked appointments, medical sessions, and consultations on MediQueue.",
+    description:
+        "View and manage your booked appointments, medical sessions, and consultations on MediQueue.",
     keywords: [
         "MediQueue Bookings",
         "My Appointments",
         "Medical Sessions",
-        "Queue Status"
+        "Queue Status",
     ],
     openGraph: {
         title: "My Bookings | MediQueue",
@@ -22,23 +20,19 @@ export const metadata = {
     },
 };
 
-
-
-
 const MyBookedPage = async () => {
     const session = await auth.api.getSession({
-        headers: await headers()
+        headers: await headers(),
     });
-    const {token} = await auth.api.getToken({
-        headers: await headers()
+    const { token } = await auth.api.getToken({
+        headers: await headers(),
     });
 
     const allBookUser = await getUserBook(session?.user?.id, token);
 
-
     return (
         <div>
-            <MyBookedTable allBook={allBookUser}/>
+            <MyBookedTable allBook={allBookUser} />
         </div>
     );
 };

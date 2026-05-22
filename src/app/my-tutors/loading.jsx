@@ -6,7 +6,7 @@ const MyTutorsSkeletonTable = () => {
     const skeletonRows = Array.from({ length: 10 });
 
     return (
-        <section className="container mx-auto w-full py-12 md:py-16 px-4 md:px-6 max-w-7xl transition-colors duration-300">
+        <section className="container min-h-[90vh] mx-auto w-full py-12 md:py-16 px-4 md:px-6 max-w-7xl transition-colors duration-300">
             <div className="mb-8 space-y-2">
                 <Skeleton className="h-8 w-64 rounded-lg bg-zinc-200 dark:bg-zinc-800" />
                 <Skeleton className="h-4 w-96 rounded-lg bg-zinc-200 dark:bg-zinc-800" />

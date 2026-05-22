@@ -124,13 +124,26 @@ const AddTutorPage = () => {
                             name="image"
                             type="url"
                             className="w-full"
+                            validate={(value) => {
+                                if (!value) return null;
+
+                                try {
+                                    const url = new URL(value);
+                                    return url.protocol === "http:" ||
+                                        url.protocol === "https:"
+                                        ? null
+                                        : "Please enter a valid URL (http or https)";
+                                } catch {
+                                    return "Please enter a valid URL";
+                                }
+                            }}
                         >
                             <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                 Photo URL
                             </Label>
                             <Input
-                                placeholder="Enter your imageUrl"
-                                className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50"
+                                placeholder="https://example.com/image-link"
+                                className="w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 px-3 py-2"
                             />
                             <FieldError className="text-xs text-red-500 mt-1" />
                         </TextField>
