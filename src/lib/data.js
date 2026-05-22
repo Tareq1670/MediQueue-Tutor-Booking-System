@@ -11,7 +11,9 @@ export const getTutors = async (search = "", startDate = "", endDate = "") => {
     const query = new URLSearchParams();
 
     Object.entries({ search, startDate, endDate }).forEach(([key, val]) => {
-        if (val) query.append(key, val);
+        if (val) {
+            query.append(key, val);
+        }
     });
 
     const res = await fetch(

@@ -153,8 +153,8 @@ const RegisterPage = () => {
                         type="password"
                         className="w-full"
                         validate={(value) => {
-                            if (value.length < 8)
-                                return "Password must be at least 8 characters";
+                            if (value.length < 6)
+                                return "Password must be at least 6 characters";
                             if (!/[A-Z]/.test(value))
                                 return "Password must contain at least one uppercase letter";
                             if (!/[0-9]/.test(value))
@@ -170,7 +170,7 @@ const RegisterPage = () => {
                             className="w-full rounded-lg border border-zinc-200 dark:border-zinc-800"
                         />
                         <Description className="text-xs text-zinc-400 dark:text-zinc-500 mt-1 block">
-                            Must be at least 8 characters with 1 uppercase and 1
+                            Must be at least 6 characters with 1 uppercase and 1
                             number
                         </Description>
                         <FieldError className="text-xs text-red-500 mt-1" />

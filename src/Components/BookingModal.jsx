@@ -15,8 +15,9 @@ import toast from "react-hot-toast";
 
 const BookingModal = ({ tutor, user, allBooking = [] }) => {
     const [error, setError] = useState("");
-    const [exit, setExit] = useState("");
+    const [exist, setExist] = useState("");
     const [loading, setLoading] = useState(false);
+
     const router = useRouter();
 
     const isExist = allBooking?.find(
@@ -27,14 +28,16 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
     );
 
     useEffect(() => {
-        if (tutor?.startDate) {
-            const currentDate = new Date();
-            const sessionStartDate = new Date(tutor.startDate);
-            const startDateTime = sessionStartDate.setHours(23, 59, 59, 999);
+        const currentDate = new Date();
 
-            if (currentDate > startDateTime) {
+        if (tutor?.sessionDate) {
+            const sessionDate = new Date(tutor.sessionDate);
+            currentDate.setHours(0, 0, 0, 0);
+            sessionDate.setHours(0, 0, 0, 0);
+
+            if (currentDate < sessionDate) {
                 setError(
-                    "Booking session has expired! Please try another available session.",
+                    "Booking is not available yet for this tutor",
                 );
             } else {
                 setError("");
@@ -42,18 +45,18 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
         }
 
         if (isExist) {
-            setExit(
-                "You have already booked this tutor. Please try booking another tutor.",
+            setExist(
+                "You have already booked this tutor session.",
             );
         } else {
-            setExit("");
+            setExist("");
         }
-    }, [tutor, allBooking, isExist]);
+    }, [tutor, isExist]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (exit || error) return;
+        if (exist || error) return;
 
         setLoading(true);
 
@@ -74,11 +77,15 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/book-session`,
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                     body: JSON.stringify(bookingData),
                 },
             );
+
             const data = await res.json();
+
             setLoading(false);
 
             if (data.success) {
@@ -94,6 +101,7 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                     className:
                         "dark:bg-zinc-800 dark:text-white dark:border-zinc-700 font-sans shadow-xl",
                 });
+
                 router.refresh();
             } else {
                 toast.error(data.message || "Something went wrong!");
@@ -108,18 +116,25 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
         <div>
             <Modal>
                 <Button
-                    isDisabled={tutor?.totalSlot === 0}
+                    isDisabled={
+                        tutor?.totalSlot === 0 || error
+                    }
                     className={`w-full h-auto rounded-lg text-white font-black py-4 transition-all duration-300 text-xs uppercase tracking-widest border
-                 ${
-                     tutor?.totalSlot === 0
-                         ? "bg-yellow-500 cursor-not-allowed border-yellow-300 dark:bg-yellow-600 dark:border-yellow-600"
-                         : "bg-green-600 hover:bg-green-500 active:scale-[0.98] shadow-xl  shadow-green-600/10 dark:shadow-none border-green-400/20"
-                 }`}
+                    ${
+                        tutor?.totalSlot === 0
+                            ? "bg-yellow-500 cursor-not-allowed border-yellow-300 dark:bg-yellow-600 dark:border-yellow-600"
+                            : error
+                              ? "bg-red-500 cursor-not-allowed border-red-300 dark:bg-red-600 dark:border-red-600"
+                              : "bg-green-600 hover:bg-green-500 active:scale-[0.98] shadow-xl shadow-green-600/10 dark:shadow-none border-green-400/20"
+                    }`}
                 >
                     {tutor?.totalSlot === 0
                         ? "No Available Slots"
-                        : "Book Session"}
+                        : error
+                          ? "Booking Not Available Yet"
+                          : "Book Session"}
                 </Button>
+
                 <Modal.Backdrop className="bg-zinc-950/40 backdrop-blur-md">
                     <Modal.Container placement="auto">
                         <Modal.Dialog className="w-full max-w-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/60 rounded-lg shadow-2xl p-2 m-4">
@@ -127,9 +142,10 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                                 <Modal.Heading className="text-2xl font-extrabold text-zinc-800 dark:text-zinc-200 tracking-tight">
                                     Book Session
                                 </Modal.Heading>
+
                                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 max-w-[280px] leading-relaxed font-normal">
                                     Fill out the details below to secure your
-                                    medical learning slot.
+                                    learning session.
                                 </p>
 
                                 <div className="w-full mt-4">
@@ -138,9 +154,10 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                                             {error}
                                         </div>
                                     )}
-                                    {exit && (
+
+                                    {exist && (
                                         <div className="p-3 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-lg text-sm text-amber-600 dark:text-amber-400">
-                                            {exit}
+                                            {exist}
                                         </div>
                                     )}
                                 </div>
@@ -165,6 +182,7 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                                             <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                                 Name
                                             </Label>
+
                                             <Input className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 focus:border-emerald-500 dark:focus:border-emerald-500 focus:outline-none transition-all duration-200 shadow-none" />
                                         </TextField>
 
@@ -177,6 +195,7 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                                             <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                                 Phone Number
                                             </Label>
+
                                             <Input
                                                 placeholder="017XX-XXXXXX"
                                                 className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:border-emerald-500 dark:focus:border-emerald-500 focus:outline-none transition-all duration-200 shadow-none"
@@ -187,15 +206,13 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                                             isRequired
                                             name="tutorName"
                                             type="text"
-                                            defaultValue={
-                                                tutor?.name ||
-                                                "TARIQUL ISLAM TAREQ"
-                                            }
+                                            defaultValue={tutor?.name}
                                             className="w-full"
                                         >
                                             <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                                 Tutor Name
                                             </Label>
+
                                             <Input className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:border-emerald-500 dark:focus:border-emerald-500 focus:outline-none transition-all duration-200 shadow-none" />
                                         </TextField>
 
@@ -209,6 +226,7 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
                                             <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-1.5 block">
                                                 Email
                                             </Label>
+
                                             <Input className="w-full h-12 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-sm text-zinc-800 dark:text-zinc-200 focus:border-emerald-500 dark:focus:border-emerald-500 focus:outline-none transition-all duration-200 shadow-none" />
                                         </TextField>
 
@@ -223,19 +241,21 @@ const BookingModal = ({ tutor, user, allBooking = [] }) => {
 
                                             <Button
                                                 isDisabled={
-                                                    error || exit || loading
+                                                    error ||
+                                                    exist ||
+                                                    loading
                                                 }
                                                 type="submit"
-                                                slot={"close"}
+                                                slot="close"
                                                 className={`px-5 h-11 rounded-xl text-white text-xs font-bold tracking-wide shadow-md active:scale-[0.98] transition-all duration-200 ${
-                                                    exit || error
+                                                    error || exist
                                                         ? "bg-amber-500 hover:bg-amber-500 cursor-not-allowed"
                                                         : "bg-green-600 hover:bg-green-500 shadow-emerald-600/10"
                                                 }`}
                                             >
                                                 {error
-                                                    ? "Expired"
-                                                    : exit
+                                                    ? "Unavailable"
+                                                    : exist
                                                       ? "Already Booked"
                                                       : loading
                                                         ? "Booking..."
