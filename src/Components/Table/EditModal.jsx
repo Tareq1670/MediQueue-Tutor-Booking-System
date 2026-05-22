@@ -123,6 +123,7 @@ export function EditTutorModal({ tutor, isOpen, onClose }) {
                                         isRequired
                                         name="image"
                                         type="url"
+                                        defaultValue={tutor?.image}
                                         className="w-full"
                                         validate={(value) => {
                                             if (!value) return null;
