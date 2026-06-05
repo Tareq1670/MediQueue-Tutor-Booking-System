@@ -50,3 +50,10 @@
 
 * JWT (JSON Web Tokens)
 * React Hot Toast
+
+## 📸 Project Preview
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/821123cb-91ea-4287-8ee0-4ef5302f21c1" alt="MediQueue Preview" width="100%" />
+</div>
+
